@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: #ffffff;
+    color: #0D1321;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  }
+}
+
+/* ─── Components that are awkward as pure utility classes ─── */
+@layer components {
+  /* Cases accordion: smooth flex-basis transition + per-element stagger inside active panel.
+     Active state driven by `data-active="true"` attribute (set by React). */
+  .case-panel {
+    transition: flex-basis 0.6s cubic-bezier(0.7, 0, 0.2, 1), background 0.4s ease;
+    will-change: flex-basis;
+  }
+  .case-panel[data-active="true"] .panel-detail > * {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fade-up 0.5s ease forwards;
+  }
+  .case-panel[data-active="true"] .panel-detail > *:nth-child(1) { animation-delay: 0.25s; }
+  .case-panel[data-active="true"] .panel-detail > *:nth-child(2) { animation-delay: 0.32s; }
+  .case-panel[data-active="true"] .panel-detail > *:nth-child(3) { animation-delay: 0.39s; }
+  .case-panel[data-active="true"] .panel-detail > *:nth-child(4) { animation-delay: 0.46s; }
+
+  /* Rotating badge ring needs a specific transform-origin */
+  .rotating-ring {
+    animation: spin-slow 14s linear infinite;
+    transform-origin: 48px 48px;
+  }
+
+  /* Sanitized blog post content typography */
+  .post-content { font-size: 16.5px; line-height: 1.78; color: #3D4555; }
+  .post-content h2 { font-size: 28px; font-weight: 800; color: #0D1321; margin: 36px 0 12px; letter-spacing: -0.4px; }
+  .post-content h3 { font-size: 21px; font-weight: 700; color: #0D1321; margin: 28px 0 10px; }
+  .post-content p { margin-bottom: 18px; }
+  .post-content ul, .post-content ol { margin: 0 0 18px 22px; }
+  .post-content a { color: #1C57F0; }
+  .post-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  /* Visual-edit debug helpers (kept from prior setup) */
+  [data-debug-wrapper="true"] { display: contents !important; }
+  [data-debug-wrapper="true"] > * {
+    margin-left: inherit; margin-right: inherit; margin-top: inherit; margin-bottom: inherit;
+    padding-left: inherit; padding-right: inherit; padding-top: inherit; padding-bottom: inherit;
+    column-gap: inherit; row-gap: inherit; gap: inherit;
+    border-left-width: inherit; border-right-width: inherit; border-top-width: inherit; border-bottom-width: inherit;
+    border-left-style: inherit; border-right-style: inherit; border-top-style: inherit; border-bottom-style: inherit;
+    border-left-color: inherit; border-right-color: inherit; border-top-color: inherit; border-bottom-color: inherit;
+  }
+}
+
+.swiper-pagination1{
+  width: auto !important;
+}
+
+/* Outer swiper container */
+.swiper.marquee-swiper {
+	mask-image: linear-gradient(
+		to right,
+		transparent 0%,
+		white 10%,
+		white 90%,
+		transparent 100%
+	);
+}
+
+.swiper-wrapper.marquee-swiper {
+	transition-timing-function: linear;
+	align-items: center;
+}
+
+/* Individual slides */
+.swiper-slide.marquee-swiper {
+	width: 12rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
