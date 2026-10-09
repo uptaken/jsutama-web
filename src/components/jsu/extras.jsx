@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, FileCheck2, Mail, MapPin, Phone } from "lucide-react";
 import {
-  COMPANY_PROFILE, COMPARE, CONTACT, DELIVERY_STEPS, ECOSYSTEM, INDUSTRIES, ISO, PARTNER_MODEL, SOLUTION_ORDER, SOLUTION_PAGES, STACK,
+  COMPANY_PROFILE, COMPARE, CONTACT, telLink, DELIVERY_STEPS, ECOSYSTEM, INDUSTRIES, ISO, PARTNER_MODEL, SOLUTION_ORDER, SOLUTION_PAGES, STACK,
 } from "./data";
 import { Btn } from "./shared";
 import { useJsu } from "./context";
@@ -138,7 +138,7 @@ export function VisitSection() {
           <ul className="jsu-x-contact">
             <li><MapPin size={20} strokeWidth={1.5} /><span>{CONTACT.address.map((l) => <span key={l}>{l}<br /></span>)}</span></li>
             <li><Mail size={20} strokeWidth={1.5} /><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
-            <li><Phone size={20} strokeWidth={1.5} /><a href={`tel:${CONTACT.phone.replace(/[^+\d]/g, "")}`}>{CONTACT.phone}</a></li>
+            <li><Phone size={20} strokeWidth={1.5} /><a href={telLink(CONTACT.phone)}>{CONTACT.phone}</a></li>
           </ul>
           <div className="jsu-x-dl-cta">
             <Btn variant="primary" onClick={() => openForm("consultation", { source: "About Us / Visit" })}>Schedule a Consultation</Btn>

@@ -5,10 +5,17 @@ import {
   Building2, ChartNoAxesCombined, Globe, Boxes, Headset, Cable, Layers, Clock3, Link2,
 } from "lucide-react";
 
+// WhatsApp deep link from a display number such as "+62 878-9276-4553"
+export const waLink = (number) => `https://wa.me/${number.replace(/\D/g, "")}`;
+export const telLink = (number) => `tel:+${number.replace(/\D/g, "")}`;
+
 export const CONTACT = {
   email: "info@jsutama.com",
-  phone: "+62 21 2788 6050",
+  // main number: also the WhatsApp line for business enquiries
+  phone: "+62 878-9276-4553",
   address: ["PT Jakarta Soerja Utama", "Soho Collins Boulevard", "Tangerang, Banten, Indonesia"],
+  // customer support lines (the main number is one of them)
+  support: ["+62 899-1500-737", "+62 878-9276-4553"],
 };
 
 /* ───────── Header / hero ───────── */
@@ -503,7 +510,7 @@ export const COMPANY_PROFILE = {
     ["Focus", "IoT Connectivity · Fleet Intelligence · AI & Automation · Smart Devices · Digital & Consulting Solutions"],
     ["Role", "System Integrator with dedicated 1st level support"],
     ["Head office", "Soho Collins Boulevard, Tangerang, Banten, Indonesia"],
-    ["Contact", "info@jsutama.com · +62 21 2788 6050"],
+    ["Contact", "info@jsutama.com · +62 878-9276-4553"],
   ],
 };
 

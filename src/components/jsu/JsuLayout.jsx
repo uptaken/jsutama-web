@@ -4,7 +4,7 @@ import {
   ArrowRight, ArrowUpRight, Briefcase, Headset, Instagram, Linkedin, Mail, MapPin, MessageCircle,
   Menu, Phone, X, Youtube,
 } from "lucide-react";
-import { CONTACT, SOLUTIONS } from "./data";
+import { CONTACT, SOLUTIONS, telLink, waLink } from "./data";
 import { Brand, Btn } from "./shared";
 import { JsuContext } from "./context";
 import SolutionModal from "./SolutionModal";
@@ -30,7 +30,8 @@ export default function JsuLayout({ c = {}, children }) {
   const lastPath = useRef(null);
 
   const email = c.contact?.email || CONTACT.email;
-  const phone = c.contact?.phone || CONTACT.phone;
+  // the phone numbers live in data.js (CONTACT); an old value saved in the CMS must not override them
+  const phone = CONTACT.phone;
   const socials = c.socials || {};
 
   const openForm = (type, preset = {}) => { setSolution(null); setMenu(false); setForm({ type, preset }); };
@@ -159,14 +160,17 @@ export default function JsuLayout({ c = {}, children }) {
               <ul className="jsu-footer-contact">
                 <li><MapPin size={17} /><span>{CONTACT.address.map((l) => <span key={l}>{l}<br /></span>)}</span></li>
                 <li><Mail size={17} /><a href={`mailto:${email}`}>{email}</a></li>
-                <li><Phone size={17} /><a href={`tel:${phone.replace(/[^+\d]/g, "")}`}>{phone}</a></li>
+                <li><Phone size={17} /><a href={telLink(phone)}>{phone}</a></li>
               </ul>
             </div>
             <div>
               <h4>Quick Links</h4>
               <ul className="jsu-quick">
-                <li><a href="https://wa.link/5u99yq" target="_blank" rel="noopener noreferrer"><MessageCircle size={17} />Business enquiries<ArrowRight size={15} /></a></li>
-                <li><a href="https://wa.link/72it3c" target="_blank" rel="noopener noreferrer"><Headset size={17} />Customer support<ArrowRight size={15} /></a></li>
+                <li><a href={waLink(CONTACT.phone)} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} />Business enquiries<ArrowRight size={15} /></a></li>
+                <li className="jsu-quick-support">
+                  <span><Headset size={17} />Customer support</span>
+                  <div>{CONTACT.support.map((n) => <a key={n} href={waLink(n)} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp customer support ${n}`}>{n}<ArrowRight size={14} /></a>)}</div>
+                </li>
                 <li><button type="button" onClick={() => openForm("career", { source: "Footer" })}><Briefcase size={17} />Career<ArrowRight size={15} /></button></li>
               </ul>
             </div>

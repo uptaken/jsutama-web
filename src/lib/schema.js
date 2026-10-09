@@ -11,7 +11,7 @@ export const organizationLd = () => ({
   slogan: "Impacting Possibilities",
   description: "IoT Connectivity, Smart Devices, Fleet Intelligence, AI Automation and Digital Solutions for connected businesses.",
   email: "info@jsutama.com",
-  telephone: "+622127886050",
+  telephone: "+6287892764553",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Soho Collins Boulevard",
@@ -19,7 +19,11 @@ export const organizationLd = () => ({
     addressRegion: "Banten",
     addressCountry: "ID",
   },
-  contactPoint: { "@type": "ContactPoint", telephone: "+622127886050", email: "info@jsutama.com", contactType: "sales" },
+  contactPoint: [
+    { "@type": "ContactPoint", telephone: "+6287892764553", email: "info@jsutama.com", contactType: "sales" },
+    { "@type": "ContactPoint", telephone: "+6289915000737", contactType: "customer support" },
+    { "@type": "ContactPoint", telephone: "+6287892764553", contactType: "customer support" },
+  ],
 });
 
 export const breadcrumbLd = (items) => ({
