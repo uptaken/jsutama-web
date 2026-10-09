@@ -4,8 +4,8 @@ Replace a file with the same name and the site picks it up. A missing logo falls
 
 | File | Used in | Status |
 |---|---|---|
-| `jsu-logo.png` | header | extracted from the review PDF — replace with the original from the Drive "logo" folder |
-| `jsu-logo-white.png` | footer | same (white version) |
+| `jsu-logo.png` | header | final logo supplied by the client |
+| `jsu-logo-white.png` | footer | white silhouette generated from the final logo |
 | `jsu-hero.jpg` | hero + share image | extracted from the review PDF (1470×730) — replace with the Drive "suggestion image" |
 | `edt-connect.png` | IoT Connectivity → ED&T Connect | extracted from the PDF — replace |
 | `nlink.png` | IoT Connectivity → N-Link | low-res crop from the PDF — replace |
