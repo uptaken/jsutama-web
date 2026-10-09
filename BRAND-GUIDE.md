@@ -1,32 +1,28 @@
-# JSU branding from the supplied reference
+# JSU website — brand & structure
 
-Source: `public/brand/jsu-reference.jpeg` — the exact, unmodified user-supplied image.
+Review source: "Review Website JSU - 03Oct26" (client feedback, implemented in `src/components/jsu/`).
 
-## Visual system
+## Palette
+Navy `#09185C` (headings) · Blue `#064BD8` (primary actions) · Green `#31994D` (accent words) · CTA green `#56A72A` · Dark navy `#00132F` (footer).
+Font: Plus Jakarta Sans.
 
-- Deep navy: `#09185C` for headlines and brand text.
-- Primary blue: `#064BD8` for primary actions and alternating icons.
-- Green: `#31994D` for emphasized words and section labels.
-- CTA green: `#56A72A`.
-- Dark navy: `#00132F` for footer and dark panels.
-- White surfaces, very light blue backgrounds, fine gray borders, restrained shadows.
-- Bold sans-serif headings; green emphasis uses the same font, not a serif.
-- Rounded buttons and service cards, alternating blue and green outline icons.
+## Page order (single page, `src/pages/Landing.jsx`)
+Hero → trust bar → **About Us** (Who We Are · Our Philosophy · Our DNA · We Understand the Challenge · Our Approach)
+→ **Solutions** (4 cards, each opens a modal) → clients → "Let's Talk" band → footer.
+The blog (`/blog`) shares the same header, footer and pop-ups (`JsuLayout`).
 
-## Image use
+## Pop-ups
+| Trigger | Content |
+|---|---|
+| Solution card / footer link | `SolutionModal` — IoT Connectivity (→ ED&T Connect, N-Link), Fleet Intelligence (Fleet BI), AI & Automation (MinteLix), Smart Devices |
+| Any "Schedule a Consultation" | Consultation form (topic pre-selected from the solution it was opened from) |
+| "Partner With Us" (header) | Partnership form |
+| "Career" (footer) | Career form |
 
-The hero background uses the original JPEG with a CSS viewport crop. Live heading, body text, navigation, and buttons cover the corresponding screenshot text. The laptop, phone, surrounding technology labels, and skyline are the original pixels; no AI recreation was used.
+All three forms `POST /api/inquiry`; the API stores them (admin → **Inquiries**) and e-mails `INQUIRY_TO` (default info@jsutama.com).
 
-The iceberg and customer marks are also displayed from the original reference through CSS crops. The source resolution is 1024×1536; larger desktop displays enlarge those pixels. Replace with original high-resolution asset exports if available later.
+## Copy
+All page copy lives in `src/components/jsu/data.js`. Edit there, not in the components.
 
-## Content and interactions
-
-The client names and numerical statements reproduce the supplied design. They are user-provided content, not independently verified claims. The existing public contact data can override email and phone. All brand copy remains local in `PremiumLanding.jsx` and does not overwrite CMS records.
-
-Motion: once-per-view entrance reveals, slight service-card lift, button arrow movement, process-line animation on supporting browsers. Reduced-motion preferences disable movement. Mobile navigation preserves destination scrolling when its drawer closes.
-
-## High-resolution hero update
-
-The hero now uses `public/brand/jsu-hero-hd.png` (2117×743), produced with the built-in imagegen tool. It reconstructs the reference artwork at higher resolution; small dashboard details may differ. The original JPEG remains for the other image crops.
-
-Prompt brief: Extract and faithfully reconstruct only the upper hero artwork at high resolution, preserving the black laptop, phone, fleet dashboard, blue connectivity icons and pale Jakarta skyline. Keep the left 35% clear for live text. Remove navigation, marketing copy, buttons, and metric strip; sharpen product detail without redesigning the composition.
+## Assets (`public/brand/`)
+See `public/brand/ASSETS.md` for the files the page expects and which ones are still placeholders.

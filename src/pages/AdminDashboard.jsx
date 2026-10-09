@@ -7,8 +7,10 @@ import { api, formatApiErrorDetail, absUploadUrl } from "@/lib/api";
 import Base from '@/utils/base'
 import { TextField,	TextArea,	ImageUpload,	ObjectEditor,	ArrayEditor, } from '@/components/adminSections/PrimitiveComponent'
 import BlogPostsManager from '@/components/adminSections/BlogManager'
+import InquiriesManager from '@/components/adminSections/InquiriesManager'
 
 const TABS = [
+	{ id: "inquiries",    label: "Inquiries" },
 	{ id: "banner",       label: "Banner" },
   { id: "hero",         label: "Hero" },
 	{ id: "stats",     		label: "Stats" },
@@ -441,6 +443,9 @@ export default function AdminDashboard() {
 
           {/* BLOG POSTS */}
           {tab === "blog_posts" && <BlogPostsManager />}
+
+          {/* INQUIRIES */}
+          {tab === "inquiries" && <InquiriesManager />}
 
           {/* CTA */}
           {tab === "cta" && (<>
