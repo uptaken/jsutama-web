@@ -99,7 +99,7 @@ function Detail({ product, badge, tone, cta, onConsult, photos }) {
             {product.collabPartners.map((p, i) => (
               <span key={p.name} className="jsu-collab-item">
                 {i > 0 && <em>&amp;</em>}
-                <Logo src={p.logo} name={p.name} className="jsu-collab-logo" />
+                <span className="jsu-collab-tile"><Logo src={p.logo} name={p.name} className="jsu-collab-logo" /></span>
               </span>
             ))}
           </span>

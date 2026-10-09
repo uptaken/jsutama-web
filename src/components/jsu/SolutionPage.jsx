@@ -95,6 +95,7 @@ export default function SolutionPage({ id }) {
   const nav = [
     isIot ? ["Standards", "certifications"] : page.groups ? ["Devices", "capabilities"] : ["Capabilities", "capabilities"],
     ...(isIot ? [["ED&T Connect", "edt"], ["N-Link", "nlink"]] : []),
+    ...(page.collab ? [["Partners", "collaboration"]] : []),
     ["Ideal for", "ideal"], ["How we deliver", "process"], ["FAQ", "faq"],
   ];
   const others = SOLUTION_ORDER.filter((k) => k !== id).map((k) => SOLUTION_PAGES[k]);
@@ -114,6 +115,12 @@ export default function SolutionPage({ id }) {
               <Btn variant="white" onClick={() => consult()}>{page.ctaLabel || "Schedule a Consultation"}</Btn>
               <Btn variant="ghost" to="/solutions">All Solutions</Btn>
             </div>
+            {page.collab && (
+              <div className="jsu-sp-hero-partners">
+                <span>{page.collab.title}</span>
+                <div>{page.collab.partners.map((p) => <span className="jsu-sp-chip" key={p.name}><Logo src={p.logo} name={p.name} /></span>)}</div>
+              </div>
+            )}
           </div>
           <div className="jsu-sp-hero-visual"><Hub hub={page.hub} tone="blue" /></div>
         </div>
@@ -129,6 +136,26 @@ export default function SolutionPage({ id }) {
         <section className="jsu-sp-photos-section" aria-label={`${page.title} in practice`}>
           <div className="jsu-shell jsu-sp-photos">
             {(SOLUTION_PHOTOS[id] || []).map((pid, i) => <Photo key={pid} id={pid} className={i === 0 ? "is-lead" : ""} />)}
+          </div>
+        </section>
+      )}
+
+      {/* ─── Strategic collaboration (partner logos) ─── */}
+      {page.collab && (
+        <section className="jsu-sp-section jsu-sp-collab-feature" id="collaboration" aria-label={page.collab.title}>
+          <div className="jsu-shell">
+            <div className="jsu-bezel jsu-reveal"><div className="jsu-bezel-in jsu-sp-collab-card">
+              <div className="jsu-sp-collab-copy">
+                <span className="jsu-pill">STRATEGIC COLLABORATION</span>
+                <h2>{page.name} is delivered together with {page.collab.partners.map((p) => p.name).join(" & ")}</h2>
+                <p>{page.collab.text}</p>
+              </div>
+              <ul className="jsu-sp-collab-logos">
+                {page.collab.partners.map((p) => (
+                  <li key={p.name}><div><Logo src={p.logo} name={p.name} /></div><span>{p.name}</span></li>
+                ))}
+              </ul>
+            </div></div>
           </div>
         </section>
       )}
@@ -173,16 +200,6 @@ export default function SolutionPage({ id }) {
                     <ul>{items.map((i) => <li key={i}><Check size={13} strokeWidth={3} />{i}</li>)}</ul>
                   </div>
                 ))}
-              </div>
-            )}
-
-            {page.collab && (
-              <div className="jsu-sp-partners">
-                <b>{page.collab.title}</b>
-                <span>{page.collab.partners.map((p, i) => (
-                  <span key={p.name} className="jsu-collab-item">{i > 0 && <em>&amp;</em>}<Logo src={p.logo} name={p.name} className="jsu-collab-logo" /></span>
-                ))}</span>
-                <p>{page.collab.text}</p>
               </div>
             )}
 
