@@ -373,3 +373,106 @@ export const FORM_COPY = {
     success: "Your application has been successfully submitted. Our team will review your profile and contact you if there is a suitable opportunity.",
   },
 };
+
+/* ───────── Solution detail pages (/solutions/:id) ───────── */
+// One-line explanation under each capability card. Plain restatements of the capability, nothing extra is promised.
+export const FEATURE_NOTES = {
+  "Multi-network M2M SIM connectivity": "SIMs that work across multiple mobile networks for dependable coverage.",
+  "Reliable connectivity for EDC and Soundbox": "Keeps payment terminals and soundbox devices online when transactions happen.",
+  "SIM usage monitoring and management": "Track and manage SIM usage across every connected device.",
+  "Enterprise deployment and technical support": "Rollout and technical support for deployments of any size.",
+  "Secure connectivity with Private APN & VPN options": "Private APN and VPN options for sensitive operational traffic.",
+  "Broad device compatibility and IoT integration": "Works with a wide range of industrial, fleet and CCTV devices.",
+  "Real-time GPS fleet tracking": "See where every vehicle is, as it happens.",
+  "AI dashcam and driver behavior monitoring": "Video and behavior insights for safer driving.",
+  "Fuel monitoring and vehicle diagnostics": "Follow fuel usage and vehicle condition in one place.",
+  "Route management and geofencing": "Plan routes and get alerted when vehicles cross defined zones.",
+  "Fleet analytics and reporting": "Turn fleet data into reports that support decisions.",
+  "Integration with third-party systems": "Connects to the systems your business already runs on.",
+  "Intelligent Document Processing (IDP)": "Read and understand invoices, contracts and forms automatically.",
+  "AI data extraction and classification": "Pull the right data out of documents and sort it correctly.",
+  "Document validation and verification": "Check extracted data before it reaches your systems.",
+  "Workflow and approval automation": "Route work to the right people without manual hand-offs.",
+  "Custom business applications and platforms": "Software built around the way your business operates.",
+  "API integration and system connectivity": "Link applications and data sources through APIs.",
+  "AI-assisted reporting and insights": "Summaries and insights that help teams decide faster.",
+  "EDC Payment": "Payment terminals for card transactions.",
+  "EDC Soundbox": "Soundbox devices that confirm payments out loud.",
+  "Smart POS Devices": "Point-of-sale hardware for modern retail.",
+  "GPS Tracker": "Location tracking for vehicles and assets.",
+  "AI Dashcam": "In-vehicle cameras with AI-assisted monitoring.",
+  "Telematics Devices": "Vehicle data collection for fleet operations.",
+  "Fuel Sensor": "Accurate fuel level and usage data.",
+  "IoT Gateway": "Collects and forwards data from field devices.",
+  "Various Sensors": "Sensors for the operational data you need to collect.",
+};
+
+export const SOLUTION_PAGES = {
+  iot: {
+    id: "iot", icon: Radio, theme: "ocean", title: "IoT Connectivity",
+    eyebrow: "IoT CONNECTIVITY",
+    tagline: "One ecosystem. Two specialized connectivity solutions.",
+    headline: "Reliable connectivity for the devices that run payments, fleets and mission-critical operations.",
+    topic: "IoT Connectivity",
+    hub: IOT_PRODUCTS.edt.hub, hubTone: "blue",
+    products: ["edt", "nlink"],
+    ideal: ["Banks & fintech", "Payment providers", "Merchants & retail", "Fleet operators", "Logistics", "Industrial enterprises", "Utilities & infrastructure", "Government projects"],
+  },
+  fleet: {
+    id: "fleet", icon: Truck, theme: "forest", title: "Fleet Intelligence",
+    eyebrow: "FLEET INTELLIGENCE",
+    tagline: FLEET.tagline, headline: FLEET.headline,
+    topic: FLEET.topic, logo: FLEET.logo, name: FLEET.name,
+    hub: FLEET.hub, hubTone: "blue",
+    capabilities: FLEET.features,
+    ideal: ["Public transportation", "Logistics", "Mining", "Construction", "Government fleets", "Enterprise mobility"],
+    collab: { title: FLEET.collabTitle, partners: FLEET.collabPartners, text: FLEET.collabText },
+  },
+  ai: {
+    id: "ai", icon: BrainCircuit, theme: "violet", title: "AI & Automation",
+    eyebrow: "AI & AUTOMATION",
+    tagline: AI.tagline, headline: AI.headline,
+    topic: AI.topic, logo: AI.logo, name: AI.name,
+    hub: AI.hub, hubTone: "blue",
+    capabilities: AI.features,
+    panels: AI.panels,
+    ideal: ["Finance", "Insurance", "Banking", "Logistics", "Manufacturing", "Government", "Enterprise operations"],
+    ctaLabel: AI.ctaLabel,
+    strip: { title: AI.stripTitle, text: AI.stripText },
+  },
+  devices: {
+    id: "devices", icon: Smartphone, theme: "slate", title: "Smart Devices",
+    eyebrow: "SMART DEVICES",
+    tagline: DEVICES.tagline, headline: DEVICES.headline,
+    topic: DEVICES.topic,
+    hub: {
+      center: "Smart Devices",
+      nodes: [
+        { icon: CreditCard, label: "EDC Payment" },
+        { icon: Volume2, label: "EDC Soundbox" },
+        { icon: MapPin, label: "GPS Tracker" },
+        { icon: Camera, label: "AI Dashcam" },
+        { icon: Cable, label: "IoT Gateway" },
+        { icon: Gauge, label: "Fuel Sensor" },
+      ],
+    },
+    hubTone: "blue",
+    groups: DEVICES.groups, why: DEVICES.why, strip: { title: DEVICES.stripTitle, text: DEVICES.stripText },
+    ideal: ["Payment & retail", "Fleet & telematics", "Industrial IoT", "Energy & infrastructure"],
+  },
+};
+
+export const SOLUTION_ORDER = ["iot", "fleet", "ai", "devices"];
+
+export const DELIVERY_STEPS = [
+  ["Discovery", "We listen to your operation, challenges and goals."],
+  ["Design", "We shape the right solution and integration for your business."],
+  ["Implementation", "We deploy and integrate with high quality and precision."],
+  ["Long-term partnership", "We keep monitoring, supporting and optimizing as you grow."],
+];
+
+export const faqFor = (title) => [
+  [`Can ${title} work with our existing systems?`, "Yes. JSU acts as the system integrator, connecting the solution with your existing platforms and business systems, including third-party systems."],
+  ["What support do you provide?", "Enterprise deployment and technical support, with dedicated 1st level support from JSU to help keep performance and customer satisfaction high."],
+  ["How do we get started?", "Schedule a consultation. We discuss your needs, design the right solution, then implement it and stay with you as a long-term partner."],
+];

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeft, ArrowRight, Check, FileCheck2, X } from "lucide-react";
 import {
@@ -16,7 +17,7 @@ export function Logo({ src, name, className = "" }) {
 }
 
 /* Hub-and-spoke diagram: logo in the middle, capabilities around it. */
-function Hub({ hub, tone }) {
+export function Hub({ hub, tone }) {
   const n = hub.nodes.length;
   const pos = (i) => {
     const angle = (-90 + (i * 360) / n) * (Math.PI / 180);
@@ -196,7 +197,10 @@ function SolutionBody({ solution, onClose, onConsult }) {
         <button type="button" className="jsu-back" onClick={() => (product ? setView("main") : onClose())}>
           <ArrowLeft size={16} /> {product ? "Back to IoT Connectivity" : "Back to Our Solutions"}
         </button>
-        <Dialog.Close className="jsu-modal-close-inline" aria-label="Close"><X size={18} /></Dialog.Close>
+        <div className="jsu-modal-bar-right">
+          <Link className="jsu-fullpage" to={`/solutions/${solution}`} onClick={onClose}>View full page <ArrowRight size={14} /></Link>
+          <Dialog.Close className="jsu-modal-close-inline" aria-label="Close"><X size={18} /></Dialog.Close>
+        </div>
       </div>
       <Dialog.Title className="jsu-sr">{product ? product.name : TITLES[solution] || "Solution"}</Dialog.Title>
       <div className="jsu-modal-body">{body}</div>

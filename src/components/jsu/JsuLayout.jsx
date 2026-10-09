@@ -137,7 +137,7 @@ export default function JsuLayout({ c = {}, children }) {
             </nav>
             <nav aria-label="Our solutions">
               <h4>Our Solutions</h4>
-              <ul>{SOLUTIONS.map(({ id, title }) => <li key={id}><button type="button" onClick={() => openSolution(id)}>{title}</button></li>)}</ul>
+              <ul>{SOLUTIONS.map(({ id, title }) => <li key={id}><Link to={`/solutions/${id}`}>{title}</Link></li>)}</ul>
             </nav>
             <div>
               <h4>Contact Us</h4>

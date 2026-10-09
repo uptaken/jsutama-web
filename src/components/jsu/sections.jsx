@@ -218,12 +218,15 @@ export function SolutionsSection({ home = false }) {
         </div>
         <div className="jsu-solution-grid">
           {SOLUTIONS.map(({ id, icon: Icon, title, text, cta }) => (
-            <button type="button" className="jsu-solution" key={id} onClick={() => openSolution(id)} aria-haspopup="dialog">
-              <Icon size={34} strokeWidth={1.5} />
-              <h3>{title}</h3>
-              <p>{text}</p>
-              <span className="jsu-card-cta">{cta} <ArrowRight size={14} /></span>
-            </button>
+            <div className="jsu-solution" key={id}>
+              <button type="button" className="jsu-solution-main" onClick={() => openSolution(id)} aria-haspopup="dialog">
+                <Icon size={34} strokeWidth={1.5} />
+                <h3>{title}</h3>
+                <p>{text}</p>
+                <span className="jsu-card-cta">{cta} <ArrowRight size={14} /></span>
+              </button>
+              <Link className="jsu-solution-page" to={`/solutions/${id}`}>Full page <ArrowRight size={13} /></Link>
+            </div>
           ))}
         </div>
       </div>

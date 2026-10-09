@@ -11,7 +11,8 @@ Font: Plus Jakarta Sans.
 |---|---|
 | `/` | Hero → trust bar → 4 solution cards → About Us strip → latest 3 articles → clients |
 | `/about` | About Us · Who We Are · Our Philosophy · Our DNA · We Understand the Challenge · Our Approach (`/about#approach`) → clients |
-| `/solutions` | One Partner. Complete Solutions. — 4 cards, each opens a modal |
+| `/solutions` | One Partner. Complete Solutions. — 4 cards: the card opens the quick-view modal, "Full page" opens the detail page |
+| `/solutions/iot` · `fleet` · `ai` · `devices` | Detail pages (dark hero, sticky sub-nav, capability cards, FAQ). IoT also has the ISO standards and full ED&T Connect / N-Link sections. Content: `SOLUTION_PAGES` in `data.js` |
 | `/blog`, `/blog/:slug` | Insights |
 
 Every page shares the header, the "Let's talk" band and the footer (`JsuLayout`).
