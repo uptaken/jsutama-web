@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ChevronDown, FileCheck2 } from "lucide-react";
 import {
-  DELIVERY_STEPS, FEATURE_NOTES, IOT, IOT_PRODUCTS, ISO, SOLUTION_ORDER, SOLUTION_PAGES, faqFor,
+  DELIVERY_STEPS, DEVICE_GROUP_PHOTO, FEATURE_NOTES, IOT, IOT_PRODUCTS, ISO, SOLUTION_ORDER, SOLUTION_PAGES, SOLUTION_PHOTOS, faqFor,
 } from "./data";
 import { Btn } from "./shared";
 import { useJsu } from "./context";
-import { Hub, Logo } from "./SolutionModal";
+import { Hub, Logo, Photo } from "./SolutionModal";
 
 const jump = (id) => (event) => {
   event.preventDefault();
@@ -65,7 +65,10 @@ function IotProducts({ onConsult }) {
                 <p className="jsu-sp-ideal"><b>Ideal for</b> {p.ideal}</p>
                 <Btn variant="primary" onClick={() => onConsult(`IoT Connectivity / ${p.name}`, p.topic)}>Schedule Consultation</Btn>
               </div>
-              <div className="jsu-sp-product-visual"><Hub hub={p.hub} tone={p.tone} /></div>
+              <div className="jsu-sp-product-visual">
+                <Hub hub={p.hub} tone={p.tone} />
+                <div className="jsu-sp-product-photos">{(SOLUTION_PHOTOS[p.id] || []).map((pid) => <Photo key={pid} id={pid} />)}</div>
+              </div>
             </div>
           </section>
         );
@@ -121,6 +124,15 @@ export default function SolutionPage({ id }) {
         <div className="jsu-shell">{nav.map(([label, target]) => <a key={target} href={`#${target}`} onClick={jump(target)}>{label}</a>)}</div>
       </nav>
 
+      {/* ─── In the field: real product / scene photos ─── */}
+      {!isIot && (
+        <section className="jsu-sp-photos-section" aria-label={`${page.title} in practice`}>
+          <div className="jsu-shell jsu-sp-photos">
+            {(SOLUTION_PHOTOS[id] || []).map((pid, i) => <Photo key={pid} id={pid} className={i === 0 ? "is-lead" : ""} />)}
+          </div>
+        </section>
+      )}
+
       {/* ─── Main body ─── */}
       {isIot ? <IotProducts onConsult={consult} /> : (
         <section className="jsu-sp-section" id="capabilities">
@@ -131,6 +143,7 @@ export default function SolutionPage({ id }) {
                 <div className="jsu-sp-groups">
                   {page.groups.map(({ icon: GIcon, tone, title, text, items }) => (
                     <article key={title} className={`tone-${tone}`}>
+                      <Photo id={DEVICE_GROUP_PHOTO[title]} className="is-group" />
                       <span className="jsu-sp-group-icon"><GIcon size={26} strokeWidth={1.5} /></span>
                       <h3>{title}</h3>
                       <p>{text}</p>

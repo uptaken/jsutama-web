@@ -579,3 +579,29 @@ export const COMPARE = {
     { id: "devices", title: "Smart Devices", does: "Payment, telematics and industrial hardware, integrated with the stack.", with: "EDC, GPS, dashcam, gateway and sensors", users: "Retail, fleets, industrial and energy sites" },
   ],
 };
+
+/* ───────── Photos / product shots (public/brand/visuals) ─────────
+   Cropped from the client's approved design mockups; swap for original photography when available. */
+export const PHOTOS = {
+  dashboard: { src: "/brand/visuals/hero-dashboard.jpg", w: 635, h: 455, alt: "JSU platform dashboard showing SIM cards, transactions and fleet status", caption: "One dashboard for devices, data and fleets" },
+  simRouter: { src: "/brand/visuals/hero-sim-router.jpg", w: 305, h: 153, alt: "Multi-network M2M SIM cards and an industrial IoT router", caption: "M2M SIMs and IoT routers" },
+  payment: { src: "/brand/visuals/hero-payment.jpg", w: 285, h: 207, alt: "Smart POS terminal and payment soundbox", caption: "POS terminals and soundbox" },
+  fleetSpklu: { src: "/brand/visuals/hero-fleet-spklu.jpg", w: 460, h: 215, alt: "Logistics trucks and electric vehicles at an SPKLU charging station", caption: "Fleets and charging infrastructure" },
+  fleetProduct: { src: "/brand/visuals/fleet-product.jpg", w: 338, h: 254, alt: "Fleet BI dashboard with mobile app, AI dashcam and GPS tracker", caption: "Fleet BI with AI dashcam and GPS tracker" },
+  devicesBanner: { src: "/brand/visuals/devices-banner.jpg", w: 650, h: 328, alt: "Smart devices: GPS tracker, AI dashcam, smart POS, soundbox, fuel sensor and IoT gateway with a truck and a bus", caption: "Connected hardware for real-world operations" },
+  devicesPayment: { src: "/brand/visuals/devices-payment.jpg", w: 240, h: 215, alt: "Smart POS device and EDC soundbox", caption: "Payment devices" },
+  devicesFleet: { src: "/brand/visuals/devices-fleet.jpg", w: 215, h: 130, alt: "GPS tracker and AI dashcam", caption: "Fleet & telematics" },
+  devicesIot: { src: "/brand/visuals/devices-iot.jpg", w: 230, h: 115, alt: "Fuel sensor and IoT gateway", caption: "IoT & industrial" },
+};
+
+// photos shown in the modal and on the page for each solution / product
+export const SOLUTION_PHOTOS = {
+  edt: ["payment", "simRouter"],
+  nlink: ["simRouter", "fleetSpklu"],
+  fleet: ["fleetProduct", "fleetSpklu"],
+  ai: ["dashboard"],
+  devices: ["devicesBanner"],
+  iot: ["simRouter", "payment", "fleetSpklu"],
+};
+// photo for each device group (by group title)
+export const DEVICE_GROUP_PHOTO = { "Payment Devices": "devicesPayment", "Fleet & Telematics": "devicesFleet", "IoT & Industrial": "devicesIot" };

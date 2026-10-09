@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeft, ArrowRight, Check, FileCheck2, X } from "lucide-react";
 import {
-  AI, DEVICES, FLEET, IOT, IOT_PRODUCTS, ISO,
+  AI, DEVICES, DEVICE_GROUP_PHOTO, FLEET, IOT, IOT_PRODUCTS, ISO, PHOTOS, SOLUTION_PHOTOS,
 } from "./data";
 
 /* An <img> that degrades to a text wordmark when the logo file is not uploaded yet. */
@@ -60,8 +60,25 @@ function Features({ title = "Key Features", items, ideal, IdealIcon }) {
   );
 }
 
+/* Real product / scene photos */
+export function Photo({ id, className = "" }) {
+  const p = PHOTOS[id];
+  if (!p) return null;
+  return (
+    <figure className={`jsu-photo ${className}`}>
+      <img src={p.src} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
+      {p.caption && <figcaption>{p.caption}</figcaption>}
+    </figure>
+  );
+}
+
+function PhotoRow({ ids }) {
+  if (!ids || ids.length === 0) return null;
+  return <div className={`jsu-photos n-${ids.length}`}>{ids.map((id) => <Photo key={id} id={id} />)}</div>;
+}
+
 /* Product / solution detail with copy on the left and the diagram on the right. */
-function Detail({ product, badge, tone, cta, onConsult }) {
+function Detail({ product, badge, tone, cta, onConsult, photos }) {
   return (
     <div className={`jsu-detail tone-${tone}`}>
       <div className="jsu-detail-copy">
@@ -74,6 +91,7 @@ function Detail({ product, badge, tone, cta, onConsult }) {
         <Features title={product.featuresTitle} items={product.features} ideal={product.ideal} IdealIcon={product.idealIcon} />
       </div>
       <Hub hub={product.hub} tone={tone} />
+      <PhotoRow ids={photos} />
       {product.collabPartners && (
         <div className="jsu-collab">
           <b>{product.collabTitle}</b>
@@ -145,14 +163,18 @@ function DevicesDetail({ onConsult }) {
   return (
     <div className="jsu-devices">
       <div className="jsu-devices-head">
-        <h2>{DEVICES.title}</h2>
-        <p className="jsu-tagline">{DEVICES.tagline}</p>
-        <p className="jsu-headline">{DEVICES.headline}</p>
+        <div>
+          <h2>{DEVICES.title}</h2>
+          <p className="jsu-tagline">{DEVICES.tagline}</p>
+          <p className="jsu-headline">{DEVICES.headline}</p>
+        </div>
+        <Photo id="devicesBanner" className="is-banner" />
       </div>
       <h3 className="jsu-modal-h">{DEVICES.groupsTitle}</h3>
       <div className="jsu-device-grid">
         {DEVICES.groups.map(({ icon: Icon, tone, title, text, items }) => (
           <article key={title} className={`jsu-device tone-${tone}`}>
+            <Photo id={DEVICE_GROUP_PHOTO[title]} className="is-device" />
             <h4><Icon size={18} strokeWidth={1.7} />{title}</h4>
             <p>{text}</p>
             <ul>{items.map((i) => <li key={i}><Check size={12} strokeWidth={3} />{i}</li>)}</ul>
@@ -186,9 +208,9 @@ function SolutionBody({ solution, onClose, onConsult }) {
 
   let body = null;
   if (solution === "iot" && !product) body = <IotMain onOpen={setView} />;
-  else if (product) body = <Detail product={product} badge={[product.kind]} tone={product.tone} onConsult={() => consult(product.topic, `IoT Connectivity / ${product.name}`)} />;
-  else if (solution === "fleet") body = <Detail product={FLEET} badge={[FLEET.badge]} tone={FLEET.tone} onConsult={() => consult(FLEET.topic, "Fleet Intelligence")} cta="Schedule a Consultation" />;
-  else if (solution === "ai") body = <Detail product={AI} badge={AI.badges} tone={AI.tone} onConsult={() => consult(AI.topic, "AI & Automation")} cta={AI.ctaLabel} />;
+  else if (product) body = <Detail photos={SOLUTION_PHOTOS[product.id]} product={product} badge={[product.kind]} tone={product.tone} onConsult={() => consult(product.topic, `IoT Connectivity / ${product.name}`)} />;
+  else if (solution === "fleet") body = <Detail photos={SOLUTION_PHOTOS.fleet} product={FLEET} badge={[FLEET.badge]} tone={FLEET.tone} onConsult={() => consult(FLEET.topic, "Fleet Intelligence")} cta="Schedule a Consultation" />;
+  else if (solution === "ai") body = <Detail photos={SOLUTION_PHOTOS.ai} product={AI} badge={AI.badges} tone={AI.tone} onConsult={() => consult(AI.topic, "AI & Automation")} cta={AI.ctaLabel} />;
   else if (solution === "devices") body = <DevicesDetail onConsult={() => consult(DEVICES.topic, "Smart Devices")} />;
 
   return (

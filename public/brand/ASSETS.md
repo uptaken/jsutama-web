@@ -13,3 +13,8 @@ Replace a file with the same name and the site picks it up. A missing logo falls
 | `mintelix.png` | AI & Automation | extracted from the PDF — replace |
 | `partners/nova.png`, `multi-entity.png`, `gas.png` | IoT page (NOVA), Fleet page and modal (Multi Entity, GAS), About ecosystem | supplied by the client (Drive zip, 09 Oct) |
 | `clients/*.png` (20 logos) | Home / About / Solutions client rails | supplied by the client (Drive zip, 09 Oct); edit the list in `CLIENTS` (`data.js`) |
+
+## Photos (`visuals/`)
+`hero-*.jpg`, `devices-*.jpg`, `fleet-product.jpg` are cropped from the client's approved design mockups (the review deck), so they are
+modest in resolution (150–650 px wide) and shown at natural size. Replace each file (same name, ideally 2x) with original photography
+when available; captions and alt text live in `PHOTOS` (`src/components/jsu/data.js`).
