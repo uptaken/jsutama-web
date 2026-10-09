@@ -55,6 +55,21 @@ export default function JsuLayout({ c = {}, children }) {
     return () => clearTimeout(timer);
   }, [pathname, hash]);
 
+  // Scroll reveal: .jsu-reveal blocks fade up once as they enter the viewport. Without JS, or with reduced motion, they simply show.
+  useEffect(() => {
+    const root = document.querySelector(".jsu-site");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!root || reduce || !("IntersectionObserver" in window)) return undefined;
+    root.classList.add("has-reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add("is-in"); observer.unobserve(entry.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    const timer = setTimeout(() => root.querySelectorAll(".jsu-reveal:not(.is-in)").forEach((el) => observer.observe(el)), 60);
+    return () => { clearTimeout(timer); observer.disconnect(); };
+  }, [pathname]);
+
   const isActive = ({ to, hash: h }) => {
     if (to === "/") return pathname === "/";
     if (to === "/about") return pathname === "/about" && (h ? hash === h : hash !== "#approach");

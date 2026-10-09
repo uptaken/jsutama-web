@@ -429,7 +429,7 @@ export const SOLUTION_PAGES = {
     collab: { title: FLEET.collabTitle, partners: FLEET.collabPartners, text: FLEET.collabText },
   },
   ai: {
-    id: "ai", icon: BrainCircuit, theme: "violet", title: "AI & Automation",
+    id: "ai", icon: BrainCircuit, theme: "emerald", title: "AI & Automation",
     eyebrow: "AI & AUTOMATION",
     tagline: AI.tagline, headline: AI.headline,
     topic: AI.topic, logo: AI.logo, name: AI.name,
@@ -476,3 +476,85 @@ export const faqFor = (title) => [
   ["What support do you provide?", "Enterprise deployment and technical support, with dedicated 1st level support from JSU to help keep performance and customer satisfaction high."],
   ["How do we get started?", "Schedule a consultation. We discuss your needs, design the right solution, then implement it and stay with you as a long-term partner."],
 ];
+
+/* ───────── Extra About Us / Solutions content ─────────
+   Everything below is rearranged from material the client supplied (the review deck, the solution
+   modals and the company details). No outside facts or figures are added. */
+export const COMPANY_PROFILE = {
+  eyebrow: "COMPANY PROFILE",
+  title: "PT Jakarta Soerja Utama at a glance",
+  rows: [
+    ["Company", "PT Jakarta Soerja Utama (JSU)"],
+    ["Promise", "Impacting Possibilities"],
+    ["Focus", "IoT Connectivity · Fleet Intelligence · AI & Automation · Smart Devices · Digital & Consulting Solutions"],
+    ["Role", "System Integrator with dedicated 1st level support"],
+    ["Head office", "Soho Collins Boulevard, Tangerang, Banten, Indonesia"],
+    ["Contact", "info@jsutama.com · +62 21 2788 6050"],
+  ],
+};
+
+export const PARTNER_MODEL = {
+  eyebrow: "HOW WE WORK",
+  title: "Experts behind every solution, one partner in front",
+  text: "We collaborate with leading global manufacturers and technology principals who are experts in their fields, then take responsibility for making the solution work for you.",
+  nodes: [
+    { icon: Factory, title: "Manufacturers & technology principals", text: "Leading global experts in their fields." },
+    { icon: Handshake, title: "JSU", text: "System Integrator and dedicated 1st level support, tailoring each solution end to end.", main: true },
+    { icon: Building2, title: "Your organization", text: "Optimal performance and customer satisfaction." },
+  ],
+  points: [
+    "Not just connecting you: end-to-end solutions tailored to each client's needs",
+    "One accountable partner instead of many disconnected vendors",
+    "Dedicated 1st level support to keep performance and satisfaction high",
+  ],
+};
+
+export const INDUSTRIES = [
+  { id: "finance", icon: Landmark, title: "Banking, Finance & Insurance", text: "Payment connectivity and document automation for regulated, high-volume operations.", solutions: ["iot", "ai", "devices"] },
+  { id: "retail", icon: Store, title: "Retail & Payments", text: "Connected EDC, soundbox and smart POS devices that keep transactions flowing.", solutions: ["iot", "devices"] },
+  { id: "logistics", icon: Truck, title: "Logistics & Transportation", text: "Real-time fleet visibility, route control and safer driving across vehicles.", solutions: ["iot", "fleet", "ai", "devices"] },
+  { id: "mining", icon: Pickaxe, title: "Mining & Construction", text: "Connectivity and telematics for heavy equipment and remote operations.", solutions: ["iot", "fleet", "devices"] },
+  { id: "industry", icon: Factory, title: "Manufacturing & Industrial", text: "Industrial IoT, sensors and automation that turn operating data into action.", solutions: ["iot", "ai", "devices"] },
+  { id: "energy", icon: PlugZap, title: "Energy & Infrastructure", text: "Monitoring for utilities, SPKLU and charging infrastructure.", solutions: ["iot", "fleet", "devices"] },
+  { id: "government", icon: Building2, title: "Government & Public Sector", text: "Fleets, infrastructure projects and enterprise operations with dependable support.", solutions: ["iot", "fleet", "ai"] },
+];
+
+export const ECOSYSTEM = {
+  eyebrow: "OUR ECOSYSTEM",
+  title: "Platforms and partners behind our solutions",
+  items: [
+    { name: "ED&T Connect", logo: "/brand/edt-connect.png", role: "Point-of-Sale Connectivity", to: "/solutions/iot" },
+    { name: "N-Link", logo: "/brand/nlink.png", role: "Point-of-Operation Connectivity", to: "/solutions/iot" },
+    { name: "Fleet BI", logo: "/brand/fleet-bi.png", role: "Fleet Intelligence", to: "/solutions/fleet" },
+    { name: "MinteLix", logo: "/brand/mintelix.png", role: "AI & Automation · Custom Software", to: "/solutions/ai" },
+  ],
+  collaborations: [
+    { name: "NOVA", logo: "/brand/partners/nova.png", role: "Connectivity collaboration" },
+    { name: "Multi Entity", logo: "/brand/partners/multi-entity.png", role: "Fleet collaboration" },
+    { name: "GAS", logo: "/brand/partners/gas.png", role: "Fleet collaboration" },
+  ],
+};
+
+export const STACK = {
+  eyebrow: "HOW IT FITS TOGETHER",
+  title: "One connected stack, from device to decision",
+  text: "Each solution stands on its own, and together they form one end-to-end flow of data.",
+  layers: [
+    { id: "devices", icon: Smartphone, tone: "slate", title: "Smart Devices", tag: "At the edge", text: "EDC and soundbox terminals, GPS trackers, AI dashcams, IoT gateways and sensors collect the data.", to: "/solutions/devices" },
+    { id: "iot", icon: Radio, tone: "blue", title: "IoT Connectivity", tag: "Always connected", text: "Multi-network M2M SIMs with usage monitoring carry it securely: ED&T Connect for payments, N-Link for operations.", to: "/solutions/iot" },
+    { id: "platform", icon: Layers, tone: "green", title: "Platforms", tag: "Intelligence", text: "Fleet BI and MinteLix turn raw signals and documents into dashboards, workflows and insights.", to: "/solutions/fleet" },
+    { id: "outcome", icon: Target, tone: "navy", title: "Business outcomes", tag: "Impact", text: "Real-time visibility and control, higher efficiency and better decisions.", to: "/solutions/ai" },
+  ],
+};
+
+export const COMPARE = {
+  eyebrow: "COMPARE SOLUTIONS",
+  title: "Find the right starting point",
+  columns: ["Solution", "What it does", "Delivered with", "Typical users"],
+  rows: [
+    { id: "iot", title: "IoT Connectivity", does: "Reliable M2M connectivity for payment terminals and operational devices.", with: "ED&T Connect · N-Link · in collaboration with NOVA", users: "Banks, merchants, fleet operators, utilities" },
+    { id: "fleet", title: "Fleet Intelligence", does: "Real-time visibility, monitoring and analytics for fleet operations.", with: "Fleet BI · with Multi Entity & GAS", users: "Transportation, logistics, mining, government fleets" },
+    { id: "ai", title: "AI & Automation", does: "Document intelligence, workflow automation and custom software.", with: "MinteLix", users: "Finance, insurance, banking, manufacturing" },
+    { id: "devices", title: "Smart Devices", does: "Payment, telematics and industrial hardware, integrated with the stack.", with: "EDC, GPS, dashcam, gateway and sensors", users: "Retail, fleets, industrial and energy sites" },
+  ],
+};
