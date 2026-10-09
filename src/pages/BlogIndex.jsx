@@ -29,7 +29,7 @@ export default function BlogIndex() {
       />
       <JsuLayout c={c}>
       <div className="min-h-[60vh] bg-white pb-20">
-        <div className="max-w-[1100px] mx-auto px-6 pt-14">
+        <div className="jsu-shell pt-14">
           <Link
             to="/"
             data-testid="back-to-home"

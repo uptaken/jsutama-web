@@ -111,7 +111,7 @@ function FormBody({ type, preset, onClose }) {
               <input required type="email" maxLength={150} value={form.email} onChange={set("email")} placeholder="name@company.com" autoComplete="email" />
             </Field>
             <Field label="WhatsApp Number" required>
-              <input required type="tel" maxLength={30} pattern="[+0-9 ().\-]{6,30}" title="Phone number, e.g. +62 812 3456 7890" value={form.phone} onChange={set("phone")} placeholder="+62 812 xxxx xxxx" autoComplete="tel" />
+              <input required type="tel" maxLength={30} inputMode="tel" value={form.phone} onChange={set("phone")} placeholder="+62 812 xxxx xxxx" autoComplete="tel" />
             </Field>
           </div>
 

@@ -44,6 +44,18 @@ export default function JsuLayout({ home = false, c = {}, children }) {
     return () => { document.body.style.overflow = ""; };
   }, [menu]);
 
+  // arriving from another page with /#about: the section only exists after React renders, so scroll once it does
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!home || !id) return undefined;
+    // jump (no animation): a smooth scroll started while the page is still laying out gets cancelled
+    const timer = setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 92, behavior: "instant" });
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [home]);
+
   // "about" -> scrolls on the landing page, "/#about" from other pages; "/blog" stays a normal link
   const hrefFor = (target) => (target.startsWith("/") ? target : home ? `#${target}` : `/#${target}`);
   const go = (target) => (event) => {

@@ -391,3 +391,6 @@
   .jsu-btn{white-space:normal;height:auto;min-height:46px;padding-block:10px}
   .jsu-hub-node b{font-size:9.5px}.jsu-hub-node small{display:none}.jsu-hub-node>span{width:36px;height:36px}
 }
+
+/* anchored sections stop below the sticky header */
+.jsu-site [id]{scroll-margin-top:92px}
