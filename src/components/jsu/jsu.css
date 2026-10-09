@@ -720,3 +720,8 @@
   .jsu-x-stack .jsu-x-step{display:none}
   .jsu-bezel-in{padding:22px 20px}
 }
+
+/* class-only margins on <p> lose to ".jsu-site p{margin:0}"; restore them */
+.jsu-site .jsu-lead{margin-bottom:36px}
+.jsu-site .jsu-eyebrow{margin-bottom:10px}
+.jsu-site .jsu-hero-copy .jsu-actions{margin-top:0}
