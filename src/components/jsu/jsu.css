@@ -795,3 +795,41 @@
 .jsu-sp-product-photos .jsu-photo{height:auto;width:auto;max-width:100%;background:#fff}
 .jsu-sp-product-photos .jsu-photo img{height:170px;width:auto;max-width:100%;object-fit:contain}
 @media(max-width:900px){.jsu-photos .jsu-photo img{height:auto;max-height:200px}}
+
+/* ═════════ Modal rhythm (8-pt spacing scale: 8 / 16 / 24 / 32 / 48) ═════════
+   Class-only margins lose to ".jsu-site h3/p{margin:0}", so every spacing rule below is prefixed. */
+.jsu-site .jsu-modal-body{padding:32px 40px 40px}
+.jsu-site .jsu-m-stack{display:grid;gap:32px}
+.jsu-site .jsu-m-section{display:grid;gap:16px}
+.jsu-site .jsu-modal-h{margin:0;font-size:17px;font-weight:800;letter-spacing:-.01em}
+.jsu-site .jsu-detail .jsu-modal-h{margin:24px 0 12px}
+.jsu-site .jsu-detail .jsu-modal-h:first-of-type{margin-top:20px}
+.jsu-site .jsu-detail-copy .jsu-badges{margin:12px 0 16px}
+.jsu-site .jsu-detail-copy .jsu-tagline{margin:0 0 8px}
+.jsu-site .jsu-detail-copy .jsu-headline{margin:0 0 4px;font-weight:700;line-height:1.45}
+
+/* smart devices */
+.jsu-site .jsu-devices-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:center;margin:0}
+.jsu-site .jsu-devices-intro h2{margin:0 0 8px;font-size:clamp(30px,3.2vw,40px);color:var(--blue)}
+.jsu-site .jsu-devices-intro .jsu-tagline{margin:0 0 16px;font-size:16px}
+.jsu-site .jsu-devices-intro .jsu-headline{margin:0;font-size:16px;font-weight:600;line-height:1.6;color:#22305c;max-width:46ch}
+.jsu-site .jsu-photo.is-banner{box-shadow:0 14px 32px -20px #0b226466;border-radius:20px}
+.jsu-site .jsu-photo figcaption{left:12px;bottom:12px}
+.jsu-site .jsu-device-grid{gap:20px}
+.jsu-site .jsu-device{padding:20px 20px 22px;border-radius:20px}
+.jsu-site .jsu-device .jsu-photo.is-device{height:132px;margin:0 0 16px}
+.jsu-site .jsu-device h4{margin:0 0 6px;font-size:16px}
+.jsu-site .jsu-device>p{margin:0 0 14px;font-size:13px;line-height:1.5;color:var(--muted)}
+.jsu-site .jsu-device ul{gap:10px}
+.jsu-site .jsu-why-grid{gap:24px;padding:24px;border-radius:20px;margin:0}
+.jsu-site .jsu-why-grid>div{gap:6px;padding:0}
+.jsu-site .jsu-why-grid span{margin-bottom:6px}
+.jsu-site .jsu-why-grid p{line-height:1.5}
+.jsu-site .jsu-strip{margin:0;padding:16px 20px;border-radius:14px}
+.jsu-site .jsu-devices .jsu-btn{margin:0}
+@media(max-width:900px){
+  .jsu-site .jsu-modal-body{padding:20px 20px 28px}
+  .jsu-site .jsu-devices-head{grid-template-columns:1fr;gap:20px}
+  .jsu-site .jsu-m-stack{gap:28px}
+  .jsu-site .jsu-why-grid{padding:20px;gap:20px}
+}

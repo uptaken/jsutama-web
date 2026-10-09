@@ -588,10 +588,10 @@ export const PHOTOS = {
   payment: { src: "/brand/visuals/hero-payment.jpg", w: 285, h: 207, alt: "Smart POS terminal and payment soundbox", caption: "POS terminals and soundbox" },
   fleetSpklu: { src: "/brand/visuals/hero-fleet-spklu.jpg", w: 460, h: 215, alt: "Logistics trucks and electric vehicles at an SPKLU charging station", caption: "Fleets and charging infrastructure" },
   fleetProduct: { src: "/brand/visuals/fleet-product.jpg", w: 338, h: 254, alt: "Fleet BI dashboard with mobile app, AI dashcam and GPS tracker", caption: "Fleet BI with AI dashcam and GPS tracker" },
-  devicesBanner: { src: "/brand/visuals/devices-banner.jpg", w: 650, h: 328, alt: "Smart devices: GPS tracker, AI dashcam, smart POS, soundbox, fuel sensor and IoT gateway with a truck and a bus", caption: "Connected hardware for real-world operations" },
-  devicesPayment: { src: "/brand/visuals/devices-payment.jpg", w: 240, h: 215, alt: "Smart POS device and EDC soundbox", caption: "Payment devices" },
+  devicesBanner: { src: "/brand/visuals/devices-banner.jpg", w: 623, h: 317, alt: "Smart devices: GPS tracker, AI dashcam, smart POS, soundbox, fuel sensor and IoT gateway with a truck and a bus", caption: "Connected hardware for real-world operations" },
+  devicesPayment: { src: "/brand/visuals/devices-payment.jpg", w: 213, h: 212, alt: "Smart POS device and EDC soundbox", caption: "Payment devices" },
   devicesFleet: { src: "/brand/visuals/devices-fleet.jpg", w: 215, h: 130, alt: "GPS tracker and AI dashcam", caption: "Fleet & telematics" },
-  devicesIot: { src: "/brand/visuals/devices-iot.jpg", w: 230, h: 115, alt: "Fuel sensor and IoT gateway", caption: "IoT & industrial" },
+  devicesIot: { src: "/brand/visuals/devices-iot.jpg", w: 207, h: 110, alt: "Fuel sensor and IoT gateway", caption: "IoT & industrial" },
 };
 
 // photos shown in the modal and on the page for each solution / product

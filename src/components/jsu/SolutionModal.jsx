@@ -161,32 +161,39 @@ function IotMain({ onOpen }) {
 
 function DevicesDetail({ onConsult }) {
   return (
-    <div className="jsu-devices">
-      <div className="jsu-devices-head">
-        <div>
+    <div className="jsu-devices jsu-m-stack">
+      <header className="jsu-devices-head">
+        <div className="jsu-devices-intro">
           <h2>{DEVICES.title}</h2>
           <p className="jsu-tagline">{DEVICES.tagline}</p>
           <p className="jsu-headline">{DEVICES.headline}</p>
         </div>
         <Photo id="devicesBanner" className="is-banner" />
-      </div>
-      <h3 className="jsu-modal-h">{DEVICES.groupsTitle}</h3>
-      <div className="jsu-device-grid">
-        {DEVICES.groups.map(({ icon: Icon, tone, title, text, items }) => (
-          <article key={title} className={`jsu-device tone-${tone}`}>
-            <Photo id={DEVICE_GROUP_PHOTO[title]} className="is-device" />
-            <h4><Icon size={18} strokeWidth={1.7} />{title}</h4>
-            <p>{text}</p>
-            <ul>{items.map((i) => <li key={i}><Check size={12} strokeWidth={3} />{i}</li>)}</ul>
-          </article>
-        ))}
-      </div>
-      <h3 className="jsu-modal-h">{DEVICES.whyTitle}</h3>
-      <div className="jsu-why-grid">
-        {DEVICES.why.map(({ icon: Icon, title, text }) => (
-          <div key={title}><span><Icon size={20} strokeWidth={1.7} /></span><b>{title}</b><p>{text}</p></div>
-        ))}
-      </div>
+      </header>
+
+      <section className="jsu-m-section" aria-labelledby="dev-groups">
+        <h3 className="jsu-modal-h" id="dev-groups">{DEVICES.groupsTitle}</h3>
+        <div className="jsu-device-grid">
+          {DEVICES.groups.map(({ icon: Icon, tone, title, text, items }) => (
+            <article key={title} className={`jsu-device tone-${tone}`}>
+              <Photo id={DEVICE_GROUP_PHOTO[title]} className="is-device" />
+              <h4><Icon size={18} strokeWidth={1.7} />{title}</h4>
+              <p>{text}</p>
+              <ul>{items.map((i) => <li key={i}><Check size={12} strokeWidth={3} />{i}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="jsu-m-section" aria-labelledby="dev-why">
+        <h3 className="jsu-modal-h" id="dev-why">{DEVICES.whyTitle}</h3>
+        <div className="jsu-why-grid">
+          {DEVICES.why.map(({ icon: Icon, title, text }) => (
+            <div key={title}><span><Icon size={20} strokeWidth={1.7} /></span><b>{title}</b><p>{text}</p></div>
+          ))}
+        </div>
+      </section>
+
       <div className="jsu-strip"><b>{DEVICES.stripTitle}</b><span>{DEVICES.stripText}</span></div>
       <button type="button" className="jsu-btn jsu-btn-primary jsu-btn-block" onClick={onConsult}>
         Schedule a Consultation <ArrowRight size={16} />
