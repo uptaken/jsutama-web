@@ -1,12 +1,14 @@
 import JsuLayout from "./JsuLayout";
-import { ClientsSection, HeroSection, Teasers, TrustBar } from "./sections";
+import { AboutStrip, ClientsSection, HeroSection, LatestPosts, SolutionsSection, TrustBar } from "./sections";
 
 export default function JsuLanding({ c = {} }) {
   return (
     <JsuLayout c={c}>
       <HeroSection />
       <TrustBar />
-      <Teasers />
+      <SolutionsSection home />
+      <AboutStrip />
+      <LatestPosts />
       <ClientsSection />
     </JsuLayout>
   );

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ArrowRight, Building2, Layers, Pause, Play } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Pause, Play } from "lucide-react";
 import {
   ABOUT_INTRO, APPROACH, CHALLENGE, CLIENTS, DNA, HERO, PHILOSOPHY, SOLUTIONS, TRUST, WHO_WE_ARE,
 } from "./data";
@@ -7,6 +7,7 @@ import { Btn } from "./shared";
 import { useJsu } from "./context";
 import { Logo } from "./SolutionModal";
 import { Link } from "react-router-dom";
+import { api, absUploadUrl } from "@/lib/api";
 
 /* ───────── Home ───────── */
 export function HeroSection() {
@@ -36,32 +37,6 @@ export function TrustBar() {
         <div key={value}><Icon strokeWidth={1.3} /><p><strong>{value}</strong><span>{label}</span></p></div>
       ))}
     </div>
-  );
-}
-
-/* Two doors into the rest of the site. */
-export function Teasers() {
-  return (
-    <section className="jsu-teasers jsu-shell" aria-label="Explore JSU">
-      <Link to="/about" className="jsu-teaser">
-        <Building2 size={34} strokeWidth={1.4} />
-        <div>
-          <p className="jsu-eyebrow">ABOUT US</p>
-          <h2>Who we are and how we work</h2>
-          <p>Our philosophy, our DNA, the challenges we understand and the approach we take with every client.</p>
-          <span className="jsu-card-cta">About Us <ArrowRight size={14} /></span>
-        </div>
-      </Link>
-      <Link to="/solutions" className="jsu-teaser">
-        <Layers size={34} strokeWidth={1.4} />
-        <div>
-          <p className="jsu-eyebrow">WHAT WE DO</p>
-          <h2>One Partner. Complete Solutions.</h2>
-          <p>{SOLUTIONS.map((s) => s.title).join(" · ")}</p>
-          <span className="jsu-card-cta">Explore Our Solutions <ArrowRight size={14} /></span>
-        </div>
-      </Link>
-    </section>
   );
 }
 
@@ -226,17 +201,20 @@ export function ApproachSection() {
   );
 }
 
-/* ───────── Solutions page ───────── */
-export function SolutionsSection() {
+/* ───────── Solutions (own page, and the same block on Home) ───────── */
+export function SolutionsSection({ home = false }) {
   const { openForm, openSolution } = useJsu();
+  const Heading = home ? "h2" : "h1";
   return (
-    <section className="jsu-solutions jsu-solutions-page" id="services">
+    <section className={`jsu-solutions ${home ? "" : "jsu-solutions-page"}`} id="services">
       <div className="jsu-shell jsu-solutions-layout">
         <div className="jsu-solutions-intro">
           <p className="jsu-eyebrow">WHAT WE DO</p>
-          <h1>One Partner.<br />Complete <em>Solutions.</em></h1>
+          <Heading>One Partner.<br />Complete <em>Solutions.</em></Heading>
           <p>We deliver end-to-end digital transformation with integrated solutions tailored to your needs.</p>
-          <Btn variant="outline" onClick={() => openForm("consultation", { source: "Solutions" })}>Schedule a Consultation</Btn>
+          {home
+            ? <Btn variant="outline" to="/solutions">Explore Our Solutions</Btn>
+            : <Btn variant="outline" onClick={() => openForm("consultation", { source: "Solutions" })}>Schedule a Consultation</Btn>}
         </div>
         <div className="jsu-solution-grid">
           {SOLUTIONS.map(({ id, icon: Icon, title, text, cta }) => (
@@ -248,6 +226,65 @@ export function SolutionsSection() {
             </button>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ───────── Home: short About Us ───────── */
+export function AboutStrip() {
+  return (
+    <section className="jsu-about-strip jsu-shell" aria-labelledby="about-strip-title">
+      <div>
+        <p className="jsu-eyebrow">ABOUT US</p>
+        <h2 id="about-strip-title">Technology that creates <em>measurable impact.</em></h2>
+        <p>{ABOUT_INTRO.paragraphs[0]}</p>
+        <Btn variant="primary" to="/about">About Us</Btn>
+      </div>
+      <ul className="jsu-pillars">
+        {ABOUT_INTRO.pillars.map(({ icon: Icon, lines }) => (
+          <li key={lines[0]}><span><Icon size={24} strokeWidth={1.4} /></span><b>{lines.map((l, i) => <span key={l} className={i === lines.length - 1 ? "is-green" : ""}>{l}</span>)}</b></li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/* ───────── Home: latest articles (hidden when there are none) ───────── */
+export function LatestPosts() {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const controller = new AbortController();
+    api.get("/blog", { params: { limit: 3 }, signal: controller.signal })
+      .then(({ data }) => setPosts(data?.data || []))
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
+
+  if (posts.length === 0) return null;
+  return (
+    <section className="jsu-latest jsu-shell" aria-labelledby="latest-title">
+      <div className="jsu-latest-head">
+        <div>
+          <p className="jsu-eyebrow">INSIGHTS</p>
+          <h2 id="latest-title">Latest from <em>JSU</em></h2>
+        </div>
+        <Btn variant="outline" to="/blog">View All Insights</Btn>
+      </div>
+      <div className="jsu-latest-grid">
+        {posts.map((post) => (
+          <Link className="jsu-post" key={post.id} to={`/blog/${post.slug}`}>
+            <div className="jsu-post-image">
+              {post.featured_image_url && <img src={absUploadUrl(post.featured_image_url)} alt="" loading="lazy" />}
+            </div>
+            <div className="jsu-post-body">
+              {post.category && <span className="jsu-badge">{post.category}</span>}
+              <h3>{post.title}</h3>
+              <p>{post.excerpt}</p>
+              <span className="jsu-card-cta">Read more <ArrowRight size={14} /></span>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );

@@ -9,7 +9,7 @@ Font: Plus Jakarta Sans.
 ## Pages
 | Route | Content |
 |---|---|
-| `/` | Hero → trust bar → two doors (About Us / Our Solutions) → clients |
+| `/` | Hero → trust bar → 4 solution cards → About Us strip → latest 3 articles → clients |
 | `/about` | About Us · Who We Are · Our Philosophy · Our DNA · We Understand the Challenge · Our Approach (`/about#approach`) → clients |
 | `/solutions` | One Partner. Complete Solutions. — 4 cards, each opens a modal |
 | `/blog`, `/blog/:slug` | Insights |
