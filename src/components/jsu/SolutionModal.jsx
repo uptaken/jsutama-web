@@ -47,7 +47,10 @@ export function Hub({ hub, tone }) {
   );
 }
 
-function Features({ title = "Key Features", items, ideal, IdealIcon }) {
+// "Public transportation, logistics, and enterprise mobility." -> ["Public transportation", "Logistics", "Enterprise mobility"]
+const idealChips = (text) => text.replace(/\.$/, "").split(/,\s*(?:and\s+)?|\s+and\s+/).map((t) => t.trim()).filter(Boolean).map((t) => t[0].toUpperCase() + t.slice(1));
+
+function Features({ title = "Key Features", items, ideal }) {
   return (
     <>
       <h3 className="jsu-modal-h">{title}</h3>
@@ -55,7 +58,7 @@ function Features({ title = "Key Features", items, ideal, IdealIcon }) {
         {items.map((item) => <li key={item}><Check size={13} strokeWidth={3} />{item}</li>)}
       </ul>
       <h3 className="jsu-modal-h">Ideal For</h3>
-      <p className="jsu-ideal"><IdealIcon size={22} strokeWidth={1.5} />{ideal}</p>
+      <ul className="jsu-chips">{idealChips(ideal).map((c) => <li key={c}>{c}</li>)}</ul>
     </>
   );
 }
@@ -65,8 +68,8 @@ export function Photo({ id, className = "" }) {
   const p = PHOTOS[id];
   if (!p) return null;
   return (
-    <figure className={`jsu-photo ${className}`}>
-      <img src={p.src} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" />
+    <figure className={`jsu-photo ${className}`} style={{ "--ar": p.w / p.h }}>
+      <div className="jsu-photo-frame"><img src={p.src} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" /></div>
       {p.caption && <figcaption>{p.caption}</figcaption>}
     </figure>
   );
@@ -74,7 +77,12 @@ export function Photo({ id, className = "" }) {
 
 function PhotoRow({ ids }) {
   if (!ids || ids.length === 0) return null;
-  return <div className={`jsu-photos n-${ids.length}`}>{ids.map((id) => <Photo key={id} id={id} />)}</div>;
+  return (
+    <section className="jsu-gallery" aria-label="In the field">
+      <h3 className="jsu-modal-h">In the field</h3>
+      <div className={`jsu-gallery-row n-${ids.length}`}>{ids.map((id) => <Photo key={id} id={id} />)}</div>
+    </section>
+  );
 }
 
 /* Product / solution detail with copy on the left and the diagram on the right. */
@@ -88,40 +96,55 @@ function Detail({ product, badge, tone, cta, onConsult, photos }) {
         </div>
         <p className="jsu-tagline">{product.tagline}</p>
         <p className="jsu-headline">{product.headline}</p>
-        <Features title={product.featuresTitle} items={product.features} ideal={product.ideal} IdealIcon={product.idealIcon} />
+        <Features title={product.featuresTitle} items={product.features} ideal={product.ideal} />
       </div>
       <Hub hub={product.hub} tone={tone} />
-      <PhotoRow ids={photos} />
-      {product.collabPartners && (
-        <div className="jsu-collab">
-          <b>{product.collabTitle}</b>
-          <span className="jsu-collab-logos">
-            {product.collabPartners.map((p, i) => (
-              <span key={p.name} className="jsu-collab-item">
-                {i > 0 && <em>&amp;</em>}
-                <span className="jsu-collab-tile"><Logo src={p.logo} name={p.name} className="jsu-collab-logo" /></span>
-              </span>
-            ))}
-          </span>
-          <p>{product.collabText}</p>
-        </div>
-      )}
-      {product.panels && (
-        <div className="jsu-panels">
-          {product.panels.map(({ icon: Icon, title, tone: t, items }) => (
-            <div key={title} className={`jsu-panel tone-${t}`}>
-              <h4><Icon size={18} strokeWidth={1.7} />{title}</h4>
-              <ul>{items.map((i) => <li key={i}><Check size={12} strokeWidth={3} />{i}</li>)}</ul>
+
+      <div className="jsu-detail-lower">
+        <PhotoRow ids={photos} />
+
+        {product.collabPartners && (
+          <section className="jsu-collab" aria-label={product.collabTitle}>
+            <div className="jsu-collab-text">
+              <span className="jsu-pill">STRATEGIC COLLABORATION</span>
+              <h3>{product.collabTitle}</h3>
+              <p>{product.collabText}</p>
             </div>
-          ))}
+            <div className="jsu-collab-logos">
+              {product.collabPartners.map((p, i) => (
+                <span key={p.name} className="jsu-collab-item">
+                  {i > 0 && <em aria-hidden="true">&amp;</em>}
+                  <span className="jsu-collab-tile"><Logo src={p.logo} name={p.name} className="jsu-collab-logo" /></span>
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {product.panels && (
+          <div className="jsu-panels">
+            {product.panels.map(({ icon: Icon, title, tone: t, items }) => (
+              <div key={title} className={`jsu-panel tone-${t}`}>
+                <h4><Icon size={18} strokeWidth={1.7} />{title}</h4>
+                <ul>{items.map((i) => <li key={i}><Check size={12} strokeWidth={3} />{i}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+        )}
+        {product.stripTitle && (
+          <div className="jsu-strip"><b>{product.stripTitle}</b><span>{product.stripText}</span></div>
+        )}
+
+        <div className="jsu-cta-bar">
+          <div>
+            <b>Ready to talk about {product.name}?</b>
+            <span>Tell us about your operation and we will propose the right starting point.</span>
+          </div>
+          <button type="button" className="jsu-btn jsu-btn-white" onClick={onConsult}>
+            {cta || "Schedule a Consultation"} <ArrowRight size={16} />
+          </button>
         </div>
-      )}
-      {product.stripTitle && (
-        <div className="jsu-strip"><b>{product.stripTitle}</b><span>{product.stripText}</span></div>
-      )}
-      <button type="button" className="jsu-btn jsu-btn-primary jsu-btn-block jsu-detail-cta" onClick={onConsult}>
-        {cta || "Schedule a Consultation"} <ArrowRight size={16} />
-      </button>
+      </div>
     </div>
   );
 }

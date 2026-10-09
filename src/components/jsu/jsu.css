@@ -881,3 +881,71 @@
 @media(max-width:900px){.jsu-sp-collab-logos li>div{height:110px}.jsu-sp-collab-logos img{max-height:74px}.jsu-sp-chip img{max-height:48px}}
 .jsu-collab-logos{flex-wrap:nowrap;gap:10px}
 .jsu-collab-tile{width:min(168px,40vw);flex:0 1 168px}
+
+/* ═════════ Solution modal: lower section (ideal for · gallery · collaboration · CTA) ═════════ */
+.jsu-site .jsu-detail{gap:32px 40px}
+.jsu-site .jsu-detail-lower{grid-column:1/-1;display:grid;gap:32px;padding-top:32px;border-top:1px solid var(--line)}
+
+/* "Ideal for" chips */
+.jsu-site .jsu-chips{display:flex;flex-wrap:wrap;gap:8px}
+.jsu-site .jsu-chips li{padding:7px 14px;border-radius:999px;background:#eef4ff;border:1px solid #d6e2f8;font-size:12.5px;font-weight:700;color:var(--navy)}
+.jsu-site .tone-green .jsu-chips li{background:#e9f6ee;border-color:#cfe8d8}
+
+/* gallery: every photo gets the same height, widths follow each photo's own aspect ratio (no cropping) */
+.jsu-site .jsu-gallery{display:grid;gap:14px}
+.jsu-site .jsu-gallery .jsu-modal-h{margin:0}
+.jsu-site .jsu-gallery-row{display:flex;gap:16px;align-items:flex-start}
+.jsu-site .jsu-gallery-row .jsu-photo{flex:var(--ar) 1 0;min-width:0;display:flex;flex-direction:column;gap:10px;background:none;box-shadow:none;overflow:visible;border-radius:0}
+.jsu-site .jsu-gallery-row .jsu-photo-frame{width:100%;aspect-ratio:var(--ar);border-radius:18px;overflow:hidden;background:#eef3fb;border:1px solid #dfe8f6;box-shadow:0 16px 30px -24px #0b226466}
+.jsu-site .jsu-gallery-row .jsu-photo img{width:100%;height:100%;max-height:none;object-fit:cover;display:block}
+.jsu-site .jsu-gallery-row .jsu-photo figcaption{position:static;padding:0 4px;background:none;backdrop-filter:none;font-size:12px;font-weight:600;color:var(--muted)}
+.jsu-site .jsu-gallery-row.n-1{max-width:520px}
+.jsu-photo-frame{display:block}
+
+/* strategic collaboration */
+.jsu-site .jsu-collab{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 40px;align-items:center;padding:28px 32px;border-radius:22px;background:linear-gradient(135deg,#eef4ff,#f4f9ff);border:1px solid #d6e2f8}
+.jsu-site .jsu-collab>b{display:none}
+.jsu-site .jsu-collab-text .jsu-pill{margin-bottom:12px}
+.jsu-site .jsu-collab-text h3{margin:0 0 8px;font-size:20px}
+.jsu-site .jsu-collab-text p{margin:0;font-size:13.5px;color:#33406b;max-width:52ch}
+.jsu-site .jsu-collab-logos{display:flex;flex-wrap:nowrap;align-items:center;gap:12px}
+.jsu-site .jsu-collab-item{display:flex;align-items:center;gap:12px}
+.jsu-site .jsu-collab-item em{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;border:1px solid #d6e2f8;font-size:14px;color:var(--muted)}
+.jsu-site .jsu-collab-tile{width:168px;height:84px;padding:12px 20px;border-radius:16px;box-shadow:0 12px 24px -18px #0b226466}
+.jsu-site .jsu-collab-tile .jsu-collab-logo{max-height:60px}
+
+/* closing call-to-action bar */
+.jsu-site .jsu-cta-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:24px 28px;border-radius:22px;color:#fff;background:linear-gradient(120deg,#08236f,#0a47b8)}
+.jsu-site .jsu-cta-bar b{display:block;font-size:18px;margin-bottom:4px}
+.jsu-site .jsu-cta-bar span{font-size:13.5px;color:#cfe0ff}
+.jsu-site .jsu-cta-bar .jsu-btn{flex:none}
+.jsu-site .tone-green .jsu-cta-bar{background:linear-gradient(120deg,#0a3f26,#1f7a43)}
+
+@media(max-width:900px){
+  .jsu-site .jsu-detail{gap:28px}
+  .jsu-site .jsu-detail-lower{gap:28px;padding-top:28px}
+  .jsu-site .jsu-gallery-row{flex-direction:column}
+  .jsu-site .jsu-gallery-row .jsu-photo{flex:none;width:100%}
+  .jsu-site .jsu-collab{grid-template-columns:1fr;padding:22px 20px}
+  .jsu-site .jsu-collab-tile{width:min(168px,40vw)}
+  .jsu-site .jsu-cta-bar{padding:22px 20px}
+  .jsu-site .jsu-cta-bar .jsu-btn{width:100%}
+}
+
+/* photo frame inside every <figure>: fills fixed-height figures, shrink-wraps free ones */
+.jsu-photo>.jsu-photo-frame{height:100%;width:100%;border-radius:inherit;overflow:hidden}
+.jsu-sp-photos .jsu-photo>.jsu-photo-frame,.jsu-sp-product-photos .jsu-photo>.jsu-photo-frame{width:auto;height:auto}
+
+/* grid children may shrink below their content width (prevents a stray horizontal scrollbar in the modal) */
+.jsu-detail>*,.jsu-detail-lower>*{min-width:0}
+@media(max-width:900px){.jsu-site .jsu-detail{grid-template-columns:minmax(0,1fr)}.jsu-site .jsu-modal{overflow-x:hidden}}
+
+/* collaboration card must never exceed its own width */
+.jsu-site .jsu-collab>*{min-width:0}
+@media(max-width:900px){
+  .jsu-site .jsu-collab{grid-template-columns:minmax(0,1fr)}
+  .jsu-site .jsu-collab-logos{width:100%}
+  .jsu-site .jsu-collab-item{flex:1 1 0;min-width:0}
+  .jsu-site .jsu-collab-item:first-child{flex:1 1 0}
+  .jsu-site .jsu-collab-tile{flex:1 1 0;width:auto;max-width:168px;min-width:0}
+}
