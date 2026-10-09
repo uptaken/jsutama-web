@@ -394,3 +394,19 @@
 
 /* anchored sections stop below the sticky header */
 .jsu-site [id]{scroll-margin-top:92px}
+
+/* ─── separate pages ─── */
+.jsu-teasers{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:70px 0 20px}
+.jsu-teaser{display:flex;gap:22px;align-items:flex-start;padding:30px 30px 28px;border:1px solid var(--line);border-radius:20px;background:#fff;transition:transform .25s,box-shadow .25s,border-color .25s}
+.jsu-teaser>svg{flex:none;color:var(--blue);margin-top:4px}
+.jsu-teaser:nth-child(2)>svg{color:var(--green)}
+.jsu-teaser h2{font-size:clamp(20px,2vw,26px);margin-bottom:8px}
+.jsu-teaser p:not(.jsu-eyebrow){color:var(--muted);font-size:14px;margin-bottom:14px}
+.jsu-teaser:hover{transform:translateY(-4px);border-color:#9bb8f0;box-shadow:0 16px 34px #0b226418}
+.jsu-teaser:hover .jsu-card-cta svg{transform:translateX(3px)}
+.jsu-site h1.jsu-about-title{font-size:clamp(34px,4vw,52px);line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.jsu-solutions-intro h1{font-size:clamp(30px,3.4vw,44px);line-height:1.12;font-weight:800;letter-spacing:-.02em}
+.jsu-solutions-page{padding:70px 0 80px;min-height:60vh}
+.jsu-about .jsu-about-actions{margin-bottom:56px}
+.jsu-desktop-nav>a.is-active{color:var(--navy)}
+@media(max-width:900px){.jsu-teasers{grid-template-columns:1fr;padding-top:48px}}

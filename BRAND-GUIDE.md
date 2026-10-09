@@ -6,10 +6,15 @@ Review source: "Review Website JSU - 03Oct26" (client feedback, implemented in `
 Navy `#09185C` (headings) · Blue `#064BD8` (primary actions) · Green `#31994D` (accent words) · CTA green `#56A72A` · Dark navy `#00132F` (footer).
 Font: Plus Jakarta Sans.
 
-## Page order (single page, `src/pages/Landing.jsx`)
-Hero → trust bar → **About Us** (Who We Are · Our Philosophy · Our DNA · We Understand the Challenge · Our Approach)
-→ **Solutions** (4 cards, each opens a modal) → clients → "Let's Talk" band → footer.
-The blog (`/blog`) shares the same header, footer and pop-ups (`JsuLayout`).
+## Pages
+| Route | Content |
+|---|---|
+| `/` | Hero → trust bar → two doors (About Us / Our Solutions) → clients |
+| `/about` | About Us · Who We Are · Our Philosophy · Our DNA · We Understand the Challenge · Our Approach (`/about#approach`) → clients |
+| `/solutions` | One Partner. Complete Solutions. — 4 cards, each opens a modal |
+| `/blog`, `/blog/:slug` | Insights |
+
+Every page shares the header, the "Let's talk" band and the footer (`JsuLayout`).
 
 ## Pop-ups
 | Trigger | Content |

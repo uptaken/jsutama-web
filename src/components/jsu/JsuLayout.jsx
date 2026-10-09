@@ -1,36 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   ArrowRight, ArrowUpRight, Briefcase, Headset, Instagram, Linkedin, Mail, MapPin, MessageCircle,
   Menu, Phone, X, Youtube,
 } from "lucide-react";
 import { CONTACT, SOLUTIONS } from "./data";
-import { Brand } from "./shared";
+import { Brand, Btn } from "./shared";
 import { JsuContext } from "./context";
 import SolutionModal from "./SolutionModal";
 import InquiryModal from "./InquiryModal";
 import "./jsu.css";
 
 const NAV = [
-  ["Home", "top"],
-  ["Solutions", "services"],
-  ["Our Approach", "approach"],
-  ["Insights", "/blog"],
-  ["About Us", "about"],
+  { label: "Home", to: "/" },
+  { label: "Solutions", to: "/solutions" },
+  { label: "Our Approach", to: "/about", hash: "#approach" },
+  { label: "Insights", to: "/blog" },
+  { label: "About Us", to: "/about" },
 ];
 
-const scrollToId = (id) => {
-  if (id === "top") window.scrollTo({ top: 0, behavior: "smooth" });
-  else document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
 /**
- * Header, footer and the pop-ups shared by the landing page and the blog.
- * `home` = true on "/" (anchors scroll in place); elsewhere they link back to "/#section".
+ * Header, footer, the "Let's talk" band and the pop-ups shared by every page.
  */
-export default function JsuLayout({ home = false, c = {}, children }) {
+export default function JsuLayout({ c = {}, children }) {
   const [menu, setMenu] = useState(false);
   const [solution, setSolution] = useState(null);
   const [form, setForm] = useState(null); // { type, preset }
+  const { pathname, hash } = useLocation();
+  const lastPath = useRef(null);
 
   const email = c.contact?.email || CONTACT.email;
   const phone = c.contact?.phone || CONTACT.phone;
@@ -44,28 +41,29 @@ export default function JsuLayout({ home = false, c = {}, children }) {
     return () => { document.body.style.overflow = ""; };
   }, [menu]);
 
-  // arriving from another page with /#about: the section only exists after React renders, so scroll once it does
+  // New page -> top. Link with #hash -> that section (below the sticky header).
+  // A jump is used when the page just changed: a smooth scroll started while it is still laying out gets cancelled.
   useEffect(() => {
-    const id = window.location.hash.slice(1);
-    if (!home || !id) return undefined;
-    // jump (no animation): a smooth scroll started while the page is still laying out gets cancelled
+    const samePage = lastPath.current === pathname;
+    lastPath.current = pathname;
+    const id = hash.slice(1);
     const timer = setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 92, behavior: "instant" });
-    }, 150);
+      const el = id ? document.getElementById(id) : null;
+      const top = el ? el.getBoundingClientRect().top + window.scrollY - 92 : 0;
+      window.scrollTo({ top, behavior: samePage ? "smooth" : "instant" });
+    }, 80);
     return () => clearTimeout(timer);
-  }, [home]);
+  }, [pathname, hash]);
 
-  // "about" -> scrolls on the landing page, "/#about" from other pages; "/blog" stays a normal link
-  const hrefFor = (target) => (target.startsWith("/") ? target : home ? `#${target}` : `/#${target}`);
-  const go = (target) => (event) => {
-    setMenu(false);
-    if (!home || target.startsWith("/")) return;
-    event.preventDefault();
-    scrollToId(target);
+  const isActive = ({ to, hash: h }) => {
+    if (to === "/") return pathname === "/";
+    if (to === "/about") return pathname === "/about" && (h ? hash === h : hash !== "#approach");
+    return pathname === to || pathname.startsWith(`${to}/`);
   };
+  const linkTo = ({ to, hash: h }) => (h ? { pathname: to, hash: h } : to);
+  const contactTo = { pathname, hash: "#contact" };
 
-  const ctx = { home, openForm, openSolution, go, hrefFor };
+  const ctx = { openForm, openSolution };
 
   return (
     <JsuContext.Provider value={ctx}>
@@ -75,15 +73,15 @@ export default function JsuLayout({ home = false, c = {}, children }) {
       {/* ─── Header ─── */}
       <header className="jsu-header">
         <div className="jsu-shell jsu-header-inner">
-          <a href="/" aria-label="Jakarta Soerja Utama home" onClick={go("top")}><Brand /></a>
+          <Link to="/" aria-label="Jakarta Soerja Utama home" onClick={() => setMenu(false)}><Brand /></Link>
           <nav className="jsu-desktop-nav" aria-label="Primary navigation">
-            {NAV.map(([label, target], i) => (
-              <a key={label} href={hrefFor(target)} className={i === 0 && home ? "is-active" : ""} onClick={go(target)}>{label}</a>
+            {NAV.map((item) => (
+              <Link key={item.label} to={linkTo(item)} className={isActive(item) ? "is-active" : ""} aria-current={isActive(item) ? "page" : undefined}>{item.label}</Link>
             ))}
             <button type="button" className="jsu-partner-link" onClick={() => openForm("partnership", { source: "Header" })}>Partner With Us</button>
           </nav>
           <div className="jsu-header-actions">
-            <a className="jsu-nav-contact" href={hrefFor("contact")} onClick={go("contact")}>Contact Us</a>
+            <Link className="jsu-nav-contact" to={contactTo}>Contact Us</Link>
             <button type="button" className="jsu-menu" aria-label={menu ? "Close navigation" : "Open navigation"} aria-expanded={menu} onClick={() => setMenu((v) => !v)}>
               {menu ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -91,23 +89,34 @@ export default function JsuLayout({ home = false, c = {}, children }) {
         </div>
         {menu && (
           <nav className="jsu-mobile-nav" aria-label="Mobile navigation">
-            {NAV.map(([label, target]) => (
-              <a key={label} href={hrefFor(target)} onClick={go(target)}>{label}<ArrowUpRight size={16} /></a>
+            {NAV.map((item) => (
+              <Link key={item.label} to={linkTo(item)} onClick={() => setMenu(false)}>{item.label}<ArrowUpRight size={16} /></Link>
             ))}
             <button type="button" onClick={() => openForm("partnership", { source: "Header" })}>Partner With Us<ArrowUpRight size={16} /></button>
-            <a href={hrefFor("contact")} onClick={go("contact")}>Contact Us<ArrowUpRight size={16} /></a>
+            <Link to={contactTo} onClick={() => setMenu(false)}>Contact Us<ArrowUpRight size={16} /></Link>
           </nav>
         )}
       </header>
 
       <main id="main-content">{children}</main>
 
+      {/* ─── Contact call-to-action ─── */}
+      <section className="jsu-contact" id="contact">
+        <div className="jsu-shell">
+          <div>
+            <h2>Let’s Keep <em>Impacting Possibilities.</em></h2>
+            <p>Connect with JSU and start your transformation journey today.</p>
+          </div>
+          <Btn variant="green" onClick={() => openForm("consultation", { source: "Contact" })}>Let’s Talk</Btn>
+        </div>
+      </section>
+
       {/* ─── Footer ─── */}
       <footer className="jsu-footer">
         <div className="jsu-shell">
           <div className="jsu-footer-grid">
             <div className="jsu-footer-brand">
-              <a href={hrefFor("top")} aria-label="Back to top" onClick={go("top")}><Brand white /></a>
+              <Link to="/" aria-label="JSU home"><Brand white /></Link>
               <p>Connecting Technology, Future, and Expertise to create meaningful impact.</p>
               <div className="jsu-social">
                 {[["LinkedIn", Linkedin, socials.linkedin], ["YouTube", Youtube, socials.youtube], ["Instagram", Instagram, socials.instagram]].map(([name, Icon, url]) => (
@@ -118,12 +127,12 @@ export default function JsuLayout({ home = false, c = {}, children }) {
             <nav aria-label="Company">
               <h4>Company</h4>
               <ul>
-                <li><a href={hrefFor("top")} onClick={go("top")}>Home</a></li>
-                <li><a href={hrefFor("about")} onClick={go("about")}>About Us</a></li>
-                <li><a href={hrefFor("services")} onClick={go("services")}>Our Solutions</a></li>
-                <li><a href="/blog">Insights</a></li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">About Us</Link></li>
+                <li><Link to="/solutions">Our Solutions</Link></li>
+                <li><Link to="/blog">Insights</Link></li>
                 <li><button type="button" onClick={() => openForm("career", { source: "Footer" })}>Career</button></li>
-                <li><a href={hrefFor("contact")} onClick={go("contact")}>Contact</a></li>
+                <li><Link to={contactTo}>Contact</Link></li>
               </ul>
             </nav>
             <nav aria-label="Our solutions">

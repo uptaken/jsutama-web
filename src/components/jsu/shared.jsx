@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 
@@ -12,9 +13,10 @@ export function Brand({ white = false }) {
   );
 }
 
-export function Btn({ children, onClick, href, variant = "outline", icon = true, ...rest }) {
+export function Btn({ children, onClick, href, to, variant = "outline", icon = true, ...rest }) {
   const className = `jsu-btn jsu-btn-${variant}`;
   const content = <>{children}{icon && <ArrowRight size={16} aria-hidden="true" />}</>;
+  if (to) return <Link className={className} to={to} {...rest}>{content}</Link>;
   return href
     ? <a className={className} href={href} {...rest}>{content}</a>
     : <button type="button" className={className} onClick={onClick} {...rest}>{content}</button>;
