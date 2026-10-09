@@ -22,11 +22,11 @@ export default function Nav({ c }) {
         <Link
           to="/"
           data-testid="nav-logo"
-          aria-label="Digix"
+          aria-label="Jakarta Soerja Utama"
           className="flex items-center gap-2.5 font-extrabold text-[20px] text-ink no-underline"
         >
           {logoUrl ? (
-            <img src={absUploadUrl(logoUrl)} alt="Digix" className="md:h-[3rem] lg:h-[3.5rem] w-auto" />
+            <img src={absUploadUrl(logoUrl)} alt="Jakarta Soerja Utama" className="md:h-[3rem] lg:h-[3.5rem] w-auto" />
           ) : (
             <>
               <span
@@ -40,7 +40,7 @@ export default function Nav({ c }) {
                   <rect x="11" y="11" width="7" height="7" rx="1.5" />
                 </svg>
               </span>
-              Digix
+              JSU
             </>
           )}
         </Link>

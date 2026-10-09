@@ -1,6 +1,3 @@
 User-agent: *
 Allow: /
 Disallow: /admin
-Disallow: /admin/login
-
-Sitemap: https://tech-landing-v1.preview.emergentagent.com/api/sitemap.xml

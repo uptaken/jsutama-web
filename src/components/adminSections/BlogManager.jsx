@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { api, formatApiErrorDetail, absUploadUrl } from "@/lib/api";
-import { useAuth } from "@/contexts/AuthContext";
+import { api, apiErrorMessage, absUploadUrl } from "@/lib/api";
+import Base from "@/utils/base";
 
 import { TextField,	TextArea,	ImageUpload,	ObjectEditor,	ArrayEditor, } from '@/components/adminSections/PrimitiveComponent'
 
@@ -21,33 +21,35 @@ export default function BlogPostsManager() {
 	const [posts, setPosts] = useState([]);
 	const [editing, setEditing] = useState(null);
 	const [busy, setBusy] = useState(false);
-	const reload = useCallback(() => api.get("/blog?published_only=false&limit=200").then(({ data }) => setPosts(data || [])).catch(() => {}), []);
+	const reload = useCallback(() => api.get("/blog?published_only=false&limit=100").then(({ data }) => setPosts(data?.data || [])).catch(() => {}), []);
 	useEffect(() => { reload(); }, [reload]);
 
-	const blank = { title: "", slug: "", excerpt: "", content: "", category: "", author_name: "", author_initials: "", featured_image_url: "", published: true };
+	const blank = { title: "", slug: "", excerpt: "", content: "", category: "", author_name: "", author_initials: "", featured_image_url: "", image: null, published: true };
 
 	const save = async () => {
 		setBusy(true);
 		try {
-			if (editing?.id) await api.put(`/blog/${editing.id}`, editing);
+			if (editing?.id) await api.post("/blog/edit", editing);
 			else await api.post("/blog", editing);
 			toast.success("Post saved");
 			setEditing(null);
 			reload();
-		} catch (e) { toast.error(formatApiErrorDetail(e.response?.data?.detail) || e.message); }
+		} catch (e) { toast.error(apiErrorMessage(e)); }
 		setBusy(false);
 	};
 
 	const remove = async (id) => {
 		if (!window.confirm("Delete this post permanently?")) return;
-		try { await api.delete(`/blog/${id}`); toast.success("Post deleted"); reload(); }
-		catch (e) { toast.error(formatApiErrorDetail(e.response?.data?.detail) || e.message); }
+		try { await api.post("/blog/delete", { id }); toast.success("Post deleted"); reload(); }
+		catch (e) { toast.error(apiErrorMessage(e)); }
 	};
 
 	const onUpload = async (e) => {
 		const f = e.target.files?.[0]; if (!f) return;
-		try { const url = await uploadImage(f); setEditing({ ...editing, featured_image_url: url }); toast.success("Image uploaded"); }
-		catch (err) { toast.error(formatApiErrorDetail(err.response?.data?.detail) || err.message); }
+		// the API converts the data URL to webp and returns the final URL on save
+		const preview = URL.createObjectURL(f);
+		const dataUrl = await new Base().toDataURLPromise(preview);
+		setEditing({ ...editing, featured_image_url: preview, image: { file: dataUrl, file_name: f.name } });
 	};
 
 	if (editing) {
@@ -73,7 +75,7 @@ export default function BlogPostsManager() {
 					<label className={LABEL}>Featured image</label>
 					<div className="flex items-center gap-3">
 						<div className="w-[72px] h-[72px] rounded-lg bg-[#F5F7FB] border border-hairline overflow-hidden shrink-0">
-							{editing.featured_image_url && <img src={absUploadUrl(editing.featured_image_url)} alt="preview" className="w-full h-full object-cover" />}
+							{editing.featured_image_url && <img src={editing.image ? editing.featured_image_url : absUploadUrl(editing.featured_image_url)} alt="preview" className="w-full h-full object-cover" />}
 						</div>
 						<input type="file" accept="image/*" onChange={onUpload} data-testid="post-upload" />
 					</div>

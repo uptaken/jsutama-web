@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { api, formatApiErrorDetail, absUploadUrl } from "@/lib/api";
-import { useAuth } from "@/contexts/AuthContext";
 
 import Base from '@/utils/base'
 
@@ -46,13 +45,6 @@ function TextArea({ label, value, onChange, hint, rows = 4, testId }) {
 			{hint && <span className={HINT}>{hint}</span>}
 		</div>
 	);
-}
-
-async function uploadImage(file) {
-	const fd = new FormData();
-	fd.append("file", file);
-	const { data } = await api.post("/upload", fd, { headers: { "Content-Type": "multipart/form-data" } });
-	return data.url;
 }
 
 function ImageUpload({ label, value, onChange, onChangeImageData, hint, recommended, testId }) {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, absUploadUrl } from "@/lib/api";
+import { useContent } from "@/lib/useContent";
 import SEO from "@/components/SEO";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -11,20 +12,19 @@ function fmtDate(iso) {
 }
 
 export default function BlogIndex() {
-  const [c, setC] = useState({});
+  const c = useContent();
   const [posts, setPosts] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    api.get("/content").then(({ data }) => setC(data || {})).catch(() => {});
-    api.get("/blog?limit=50").then(({ data }) => { setPosts(data || []); setLoaded(true); }).catch(() => setLoaded(true));
+    api.get("/blog?limit=50").then(({ data }) => { setPosts(data?.data || []); setLoaded(true); }).catch(() => setLoaded(true));
   }, []);
 
   return (
     <>
       <SEO
-        title="All Articles – Digix Blog"
-        description="Engineering notes, deep dives, and field guides from the Digix team on cloud, cybersecurity, AI/ML, and modern IT."
+        title="All Articles – JSU Insights"
+        description="Insights from Jakarta Soerja Utama on IoT, fleet intelligence, AI automation, and custom software."
         path="/blog"
         image={c?.seo?.og_image_url}
       />
@@ -41,7 +41,7 @@ export default function BlogIndex() {
 
           <h1 className="text-5xl font-extrabold tracking-[-1.6px] text-ink mb-3">All Articles</h1>
           <p className="text-ink-muted text-base mb-10">
-            Engineering notes, deep dives, and field guides from the Digix team.
+            Insights on IoT, fleet intelligence, AI automation, and custom software from the JSU team.
           </p>
 
           {loaded && posts.length === 0 && (

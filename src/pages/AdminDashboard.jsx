@@ -3,7 +3,6 @@ import moment from 'moment'
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { api, formatApiErrorDetail, absUploadUrl } from "@/lib/api";
-import { useAuth } from "@/contexts/AuthContext";
 
 import Base from '@/utils/base'
 import { TextField,	TextArea,	ImageUpload,	ObjectEditor,	ArrayEditor, } from '@/components/adminSections/PrimitiveComponent'
@@ -23,7 +22,7 @@ const TABS = [
 
 
   // { id: "blog_section", label: "Blog Section" },
-  // { id: "blog_posts",   label: "Blog Posts" },
+  { id: "blog_posts",   label: "Blog Posts" },
   // { id: "cta",          label: "CTA Banner" },
   { id: "contact",      label: "Contact + Footer" },
   { id: "socials",      label: "Social Links" },
@@ -497,7 +496,7 @@ export default function AdminDashboard() {
 									logo: {url: v, file: imageData, file_name: fileName, },
 								}
 							})}
-							recommended="160×40 PNG or SVG, transparent background" hint="Replaces the default blue grid icon + 'Digix' wordmark in the nav and footer." testId="brand-logo" />
+							recommended="160×40 PNG or SVG, transparent background" hint="Replaces the default blue grid icon + 'JSU' wordmark in the nav and footer." testId="brand-logo" />
             <ImageUpload label="Default share image (Open Graph)" value={c.brand?.og_image_url}
 							onChange={(v, fileName, imageData) => setC({
 								...c, brand: {

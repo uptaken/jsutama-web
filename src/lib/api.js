@@ -1,19 +1,18 @@
 import axios from "axios";
 
-const BASE = import.meta.env.VITE_BACKEND_URL;
+const BASE = (import.meta.env.VITE_BACKEND_URL || "").replace(/\/$/, "");
 
 export const API_BASE = `${BASE}/api`;
 
 export const api = axios.create({
   baseURL: API_BASE,
-  // withCredentials: true,
 });
 
-// Attach Authorization header as fallback (cookies are primary).
+// The admin login stores the full "Bearer …" value returned by the API under "token".
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("digix_token");
+  const token = localStorage.getItem("token");
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = token;
   }
   return config;
 });
@@ -28,6 +27,11 @@ export function formatApiErrorDetail(detail) {
       .join(" ");
   if (detail && typeof detail.msg === "string") return detail.msg;
   return String(detail);
+}
+
+// API errors look like { status: "error", message: "…" }
+export function apiErrorMessage(error) {
+  return error?.response?.data?.message || formatApiErrorDetail(error?.response?.data?.detail) || error?.message;
 }
 
 export function absUploadUrl(url) {

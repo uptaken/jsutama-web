@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { api, absUploadUrl } from "@/lib/api";
+import { useContent } from "@/lib/useContent";
 import SEO from "@/components/SEO";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -15,13 +16,14 @@ const SANITIZE_CFG = {
 
 export default function BlogPost() {
   const { slug } = useParams();
-  const [c, setC] = useState({});
+  const c = useContent();
   const [post, setPost] = useState(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    api.get("/content").then(({ data }) => setC(data || {})).catch(() => {});
-    api.get(`/blog/${slug}`).then(({ data }) => setPost(data)).catch(() => setNotFound(true));
+    api.get(`/blog/${slug}`)
+      .then(({ data }) => { setPost(data?.data || null); setNotFound(false); })
+      .catch(() => setNotFound(true));
   }, [slug]);
 
   const safeHtml = post?.content
@@ -32,7 +34,7 @@ export default function BlogPost() {
     <>
       {post && (
         <SEO
-          title={`${post.title} – Digix Blog`}
+          title={`${post.title} – JSU Insights`}
           description={post.excerpt || `${post.title} — by ${post.author_name}.`}
           path={`/blog/${post.slug}`}
           image={post.featured_image_url || c?.seo?.og_image_url}
@@ -45,14 +47,14 @@ export default function BlogPost() {
             image: post.featured_image_url ? absUploadUrl(post.featured_image_url) : undefined,
             datePublished: post.created_at,
             dateModified: post.updated_at || post.created_at,
-            author: { "@type": "Person", name: post.author_name || "Digix" },
+            author: { "@type": "Person", name: post.author_name || "Jakarta Soerja Utama" },
             articleSection: post.category,
-            mainEntityOfPage: { "@type": "WebPage", "@id": `${(import.meta.env.VITE_BACKEND_URL || "")}/blog/${post.slug}` },
+            mainEntityOfPage: { "@type": "WebPage", "@id": `${window.location.origin}/blog/${post.slug}` },
           }}
         />
       )}
       {notFound && (
-        <SEO title="Post not found – Digix" description="The article you were looking for couldn't be found." path={`/blog/${slug}`} noindex />
+        <SEO title="Post not found – JSU" description="The article you were looking for couldn't be found." path={`/blog/${slug}`} noindex />
       )}
       <Nav c={c} />
       <main className="min-h-screen bg-white pb-20">

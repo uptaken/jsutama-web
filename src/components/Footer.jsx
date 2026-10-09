@@ -1,4 +1,5 @@
 import React, {useState, useEffect,} from "react";
+import DOMPurify from "dompurify";
 import { absUploadUrl } from "@/lib/api";
 
 import WhiteLogo from '@/assets/MainLogo_Web_putih.png'
@@ -38,7 +39,7 @@ export default function Footer({ c }) {
               {c?.brand?.logo_url ? (
                 <img
                   src={absUploadUrl(c.brand.logo_url)}
-                  alt="Digix"
+                  alt="Jakarta Soerja Utama"
                   className="h-[34px] w-auto"
                   style={{ filter: "brightness(0) invert(1)" }}
                 />
@@ -50,11 +51,11 @@ export default function Footer({ c }) {
                       <rect x="2" y="11" width="7" height="7" rx="1.5" /><rect x="11" y="11" width="7" height="7" rx="1.5" />
                     </svg>
                   </span>
-                  Digix
+                  JSU
                 </>
               )}
             </a>
-            <p className="text-sm leading-[1.72] text-[#8a90a8] max-w-[320px]" dangerouslySetInnerHTML={{ __html: c?.contact?.footer_tagline, }}></p>
+            <p className="text-sm leading-[1.72] text-[#8a90a8] max-w-[320px]" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(c?.contact?.footer_tagline || "", { ALLOWED_TAGS: ["br", "b", "strong", "em", "i", "a", "span"], ALLOWED_ATTR: ["href", "target", "rel"] }) }}></p>
 
             {/* <div className="flex gap-2.5">
               {Object.entries(SOCIAL_PATHS).map(([k, d]) => (
