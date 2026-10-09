@@ -151,32 +151,44 @@ function Detail({ product, badge, tone, cta, onConsult, photos }) {
 
 function IotMain({ onOpen }) {
   return (
-    <div className="jsu-iot">
-      <div className="jsu-modal-head">
+    <div className="jsu-iot jsu-m-stack">
+      <header className="jsu-modal-head">
+        <span className="jsu-pill">IOT CONNECTIVITY</span>
         <h2>{IOT.title}</h2>
         <p>{IOT.subtitle}</p>
-      </div>
-      <section className="jsu-iso">
-        <h3><FileCheck2 size={18} strokeWidth={1.6} />{IOT.isoTitle}</h3>
-        <p>{IOT.isoText}</p>
-        <ul>{ISO.map(([code, name]) => <li key={code}><FileCheck2 size={15} strokeWidth={1.6} /><span><b>{code}</b>{name}</span></li>)}</ul>
-      </section>
+      </header>
+
       <div className="jsu-product-grid">
         {Object.values(IOT_PRODUCTS).map((p) => (
           <article key={p.id} className={`jsu-product tone-${p.tone}`}>
             <button type="button" className="jsu-product-logo" onClick={() => onOpen(p.id)} aria-label={`Open ${p.name}`}>
               <Logo src={p.logo} name={p.name} />
             </button>
-            <span className="jsu-badge">{p.badge}</span>
-            <h3>{p.kind}</h3>
-            <p>{p.blurb}</p>
-            <button type="button" className="jsu-link" onClick={() => onOpen(p.id)}>{p.cta} <ArrowRight size={14} /></button>
+            <div className="jsu-product-body">
+              <span className="jsu-badge">{p.badge}</span>
+              <h3>{p.kind}</h3>
+              <p>{p.blurb}</p>
+            </div>
+            <button type="button" className="jsu-product-cta" onClick={() => onOpen(p.id)}>{p.cta} <ArrowRight size={15} /></button>
           </article>
         ))}
       </div>
-      <section className="jsu-iot-collab">
-        <h3>{IOT.collabTitle}</h3>
-        <ul>{IOT.collab.map((c) => <li key={c}><Check size={13} strokeWidth={3} />{c}</li>)}</ul>
+
+      <section className="jsu-iot-collab" aria-label={IOT.collabTitle}>
+        <div className="jsu-iot-collab-logo"><Logo src="/brand/partners/nova.png" name="NOVA" /></div>
+        <div>
+          <h3>{IOT.collabTitle}</h3>
+          <ul>{IOT.collab.map((c) => <li key={c}><Check size={13} strokeWidth={3} />{c}</li>)}</ul>
+        </div>
+      </section>
+
+      <section className="jsu-iso-bar" aria-label={IOT.isoTitle}>
+        <div className="jsu-iso-title">
+          <FileCheck2 size={16} strokeWidth={1.7} />
+          <b>{IOT.isoTitle}</b>
+          <span>{IOT.isoText}</span>
+        </div>
+        <ul>{ISO.map(([code, name]) => <li key={code}><b>{code}</b><span>{name}</span></li>)}</ul>
       </section>
     </div>
   );

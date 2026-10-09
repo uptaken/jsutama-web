@@ -949,3 +949,56 @@
   .jsu-site .jsu-collab-item:first-child{flex:1 1 0}
   .jsu-site .jsu-collab-tile{flex:1 1 0;width:auto;max-width:168px;min-width:0}
 }
+
+/* ═════════ IoT Connectivity modal (overview) ═════════ */
+.jsu-site .jsu-iot .jsu-modal-head{text-align:left;margin:0;max-width:640px}
+.jsu-site .jsu-iot .jsu-modal-head h2{font-size:clamp(28px,3vw,36px);margin:0 0 6px}
+.jsu-site .jsu-iot .jsu-modal-head p{margin:0;font-size:15px;color:var(--muted)}
+.jsu-site .jsu-iot .jsu-pill{margin-bottom:12px}
+
+/* the two solutions lead the modal */
+.jsu-site .jsu-iot .jsu-product-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:0}
+.jsu-site .jsu-iot .jsu-product{display:flex;flex-direction:column;gap:20px;padding:20px;border-radius:24px;border:1.5px solid #cfe0fb;background:linear-gradient(180deg,#f7faff,#fff)}
+.jsu-site .jsu-iot .jsu-product.tone-green{border-color:#c9e6d3;background:linear-gradient(180deg,#f3fbf6,#fff)}
+.jsu-site .jsu-iot .jsu-product-logo{height:150px;padding:16px 24px;border-radius:18px;background:#fff;border:1px solid #e3ebf8;transition:border-color .2s,box-shadow .2s}
+.jsu-site .jsu-iot .jsu-product-logo img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.jsu-site .jsu-iot .jsu-product-body{display:grid;gap:8px;flex:1;align-content:start}
+.jsu-site .jsu-iot .jsu-product h3{margin:4px 0 0;font-size:19px}
+.jsu-site .jsu-iot .jsu-product p{margin:0;font-size:14px;color:#33406b}
+.jsu-product-cta{display:inline-flex;align-items:center;justify-content:space-between;width:100%;padding:12px 18px;border-radius:14px;border:1.5px solid #b9cdf2;background:#fff;font-size:14px;font-weight:700;color:var(--blue);transition:background-color .2s,border-color .2s,color .2s}
+.jsu-product-cta svg{transition:transform .25s var(--ease,ease-out)}
+.tone-green .jsu-product-cta{border-color:#a9d6b8;color:#1d7a3d}
+@media(hover:hover) and (pointer:fine){
+  .jsu-product-cta:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+  .tone-green .jsu-product-cta:hover{background:var(--green);border-color:var(--green);color:#fff}
+  .jsu-product-cta:hover svg{transform:translateX(3px)}
+  .jsu-iot .jsu-product-logo:hover{border-color:#9bb8f0;box-shadow:0 14px 28px -20px #0b226466}
+}
+
+/* NOVA collaboration */
+.jsu-site .jsu-iot-collab{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;padding:20px 24px;border-radius:20px;background:#f3f7ff;border:1px solid #dde7f7;margin:0}
+.jsu-iot-collab-logo{display:grid;place-items:center;width:180px;height:84px;padding:12px 20px;border-radius:16px;background:#fff;border:1px solid #dde7f7}
+.jsu-iot-collab-logo img{max-width:100%;max-height:54px;width:auto;height:auto;object-fit:contain}
+.jsu-site .jsu-iot-collab h3{margin:0 0 10px;font-size:16px}
+.jsu-site .jsu-iot-collab ul{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.jsu-site .jsu-iot-collab li{font-size:13px}
+
+/* ISO: compact badges instead of big boxes */
+.jsu-site .jsu-iso-bar{display:grid;gap:12px;margin:0;padding-top:24px;border-top:1px solid var(--line)}
+.jsu-iso-title{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;font-size:13px}
+.jsu-iso-title svg{color:var(--green);flex:none}
+.jsu-iso-title b{font-size:13.5px;color:var(--navy)}
+.jsu-iso-title span{color:var(--muted);font-size:12.5px}
+.jsu-site .jsu-iso-bar ul{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.jsu-site .jsu-iso-bar li{display:flex;flex-direction:column;gap:1px;padding:9px 12px;border-radius:12px;background:#f7faf8;border:1px solid #dbeadf;border-left:3px solid var(--green)}
+.jsu-site .jsu-iso-bar li b{font-size:13px;color:var(--navy)}
+.jsu-site .jsu-iso-bar li span{font-size:11px;line-height:1.3;color:var(--muted)}
+
+@media(max-width:900px){
+  .jsu-site .jsu-iot .jsu-product-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+  .jsu-site .jsu-iot-collab{grid-template-columns:minmax(0,1fr);gap:16px;padding:18px}
+  .jsu-site .jsu-iot-collab ul{grid-template-columns:minmax(0,1fr)}
+  .jsu-site .jsu-iso-bar ul{grid-template-columns:repeat(2,1fr)}
+  .jsu-site .jsu-iso-bar li:last-child:nth-child(odd){grid-column:1/-1}
+}
+.jsu-site .jsu-iot-collab h3{font-weight:800}
