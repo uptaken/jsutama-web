@@ -312,11 +312,25 @@ export const DEVICES = {
 /* ───────── Clients ───────── */
 export const CLIENTS = [
   { name: "PLN", logo: "/brand/clients/pln.png" },
-  { name: "Samudera", logo: "/brand/clients/samudera.png" },
+  { name: "PLN SPKLU", logo: "/brand/clients/pln-spklu.png" },
+  { name: "Samudera Indonesia", logo: "/brand/clients/samudera.png" },
   { name: "Trans Semarang", logo: "/brand/clients/trans-semarang.png" },
-  { name: "Nova Tech", logo: "/brand/clients/nova-tech.png" },
-  { name: "Powerindo", logo: "/brand/clients/powerindo.png" },
+  { name: "Trans Suroboyo", logo: "/brand/clients/trans-suroboyo.png" },
   { name: "VinFast", logo: "/brand/clients/vinfast.png" },
+  { name: "V-Green", logo: "/brand/clients/v-green.png" },
+  { name: "Powerindo", logo: "/brand/clients/powerindo.png" },
+  { name: "Nusantara Global Inovasi", logo: "/brand/clients/ngi.png" },
+  { name: "Trafindo", logo: "/brand/clients/trafindo.png" },
+  { name: "Tatonas", logo: "/brand/clients/tatonas.png" },
+  { name: "High Volt Technology", logo: "/brand/clients/hvt.png" },
+  { name: "Enertelindo", logo: "/brand/clients/enertelindo.png" },
+  { name: "Evoltz", logo: "/brand/clients/evoltz.png" },
+  { name: "EV & Charging Indonesia", logo: "/brand/clients/ev-charging-indonesia.png" },
+  { name: "ieeel Institute", logo: "/brand/clients/ieeel.png" },
+  { name: "Putra Mandiri Informatika", logo: "/brand/clients/pmi.png" },
+  { name: "Trisula", logo: "/brand/clients/trisula.png" },
+  { name: "Epicplus", logo: "/brand/clients/epicplus.png" },
+  { name: "Sunmi", logo: "/brand/clients/sunmi.png" },
 ];
 
 /* ───────── Forms ───────── */

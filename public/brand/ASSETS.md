@@ -11,5 +11,5 @@ Replace a file with the same name and the site picks it up. A missing logo falls
 | `nlink.png` | IoT Connectivity → N-Link | low-res crop from the PDF — replace |
 | `fleet-bi.png` | Fleet Intelligence | low-res crop from the PDF — replace |
 | `mintelix.png` | AI & Automation | extracted from the PDF — replace |
-| `partners/multi-entity.png`, `partners/gas.png` | Fleet Intelligence collaboration strip | **missing** (text chips shown) |
-| `clients/pln.png`, `samudera.png`, `trans-semarang.png`, `nova-tech.png`, `powerindo.png`, `vinfast.png` | client slider | **missing** (text chips shown) |
+| `partners/nova.png`, `multi-entity.png`, `gas.png` | IoT page (NOVA), Fleet page and modal (Multi Entity, GAS), About ecosystem | supplied by the client (Drive zip, 09 Oct) |
+| `clients/*.png` (20 logos) | Home / About / Solutions client rails | supplied by the client (Drive zip, 09 Oct); edit the list in `CLIENTS` (`data.js`) |

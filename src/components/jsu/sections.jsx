@@ -42,6 +42,9 @@ export function TrustBar() {
 
 export function ClientsSection() {
   const [logosPaused, setLogosPaused] = useState(false);
+  // two rails moving in opposite directions keep 20 logos readable without a very long single row
+  const half = Math.ceil(CLIENTS.length / 2);
+  const rows = [CLIENTS.slice(0, half), CLIENTS.slice(half)];
   return (
     <section className="jsu-clients jsu-shell" aria-labelledby="client-title">
       <div>
@@ -50,13 +53,15 @@ export function ClientsSection() {
       </div>
       <div className="jsu-logo-slider" data-paused={logosPaused}>
         <div className="jsu-logo-window" role="region" aria-label="Customer logos" tabIndex={0}>
-          <div className="jsu-logo-track">
-            {[0, 1].map((copy) => (
-              <div className="jsu-logo-group" key={copy} aria-hidden={copy === 1 ? true : undefined}>
-                {CLIENTS.map(({ name, logo }) => <div className="jsu-client" key={name}><Logo src={logo} name={name} /></div>)}
-              </div>
-            ))}
-          </div>
+          {rows.map((row, r) => (
+            <div className={`jsu-logo-track ${r ? "is-reverse" : ""}`} key={r} style={{ "--logos": row.length }}>
+              {[0, 1].map((copy) => (
+                <div className="jsu-logo-group" key={copy} aria-hidden={copy === 1 ? true : undefined}>
+                  {row.map(({ name, logo }) => <div className="jsu-client" key={name}><Logo src={logo} name={name} /></div>)}
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
         <button type="button" className="jsu-logo-toggle" onClick={() => setLogosPaused((v) => !v)} aria-label={logosPaused ? "Play logo animation" : "Pause logo animation"} aria-pressed={logosPaused}>
           {logosPaused ? <Play size={14} /> : <Pause size={14} />}

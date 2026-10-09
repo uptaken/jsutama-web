@@ -725,3 +725,12 @@
 .jsu-site .jsu-lead{margin-bottom:36px}
 .jsu-site .jsu-eyebrow{margin-bottom:10px}
 .jsu-site .jsu-hero-copy .jsu-actions{margin-top:0}
+
+/* client logos: two opposite rails, speed scales with the number of logos */
+.jsu-logo-window{display:grid;gap:14px}
+.jsu-logo-track{animation-duration:calc(var(--logos,10) * 5.5s)}
+.jsu-logo-track.is-reverse{animation-direction:reverse}
+.jsu-logo-slider[data-paused="true"] .jsu-logo-track{animation-play-state:paused}
+.jsu-client{height:84px;padding:14px 20px}
+.jsu-client img{filter:none}
+@media(max-width:560px){.jsu-logo-track{animation-duration:calc(var(--logos,10) * 4.5s)}.jsu-client{height:72px}}
