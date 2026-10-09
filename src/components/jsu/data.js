@@ -584,8 +584,8 @@ export const COMPARE = {
    Cropped from the client's approved design mockups; swap for original photography when available. */
 export const PHOTOS = {
   dashboard: { src: "/brand/visuals/hero-dashboard.jpg", w: 635, h: 455, alt: "JSU platform dashboard showing SIM cards, transactions and fleet status", caption: "One dashboard for devices, data and fleets" },
-  simRouter: { src: "/brand/visuals/hero-sim-router.jpg", w: 305, h: 153, alt: "Multi-network M2M SIM cards and an industrial IoT router", caption: "M2M SIMs and IoT routers" },
-  payment: { src: "/brand/visuals/hero-payment.jpg", w: 285, h: 207, alt: "Smart POS terminal and payment soundbox", caption: "POS terminals and soundbox" },
+  simRouter: { src: "/brand/visuals/m2m-sim-router.jpg", w: 1200, h: 895, alt: "Multi-network M2M SIM cards and an industrial IoT router", caption: "M2M SIMs and IoT routers" },
+  payment: { src: "/brand/visuals/pos-soundbox.jpg", w: 1200, h: 895, alt: "Smart POS terminal and payment soundbox", caption: "POS terminals and soundbox" },
   fleetSpklu: { src: "/brand/visuals/hero-fleet-spklu.jpg", w: 460, h: 215, alt: "Logistics trucks and electric vehicles at an SPKLU charging station", caption: "Fleets and charging infrastructure" },
   fleetProduct: { src: "/brand/visuals/fleet-product.jpg", w: 338, h: 254, alt: "Fleet BI dashboard with mobile app, AI dashcam and GPS tracker", caption: "Fleet BI with AI dashcam and GPS tracker" },
   devicesBanner: { src: "/brand/visuals/devices-banner.jpg", w: 623, h: 317, alt: "Smart devices: GPS tracker, AI dashcam, smart POS, soundbox, fuel sensor and IoT gateway with a truck and a bus", caption: "Connected hardware for real-world operations" },

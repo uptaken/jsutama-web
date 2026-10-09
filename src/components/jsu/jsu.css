@@ -1070,3 +1070,11 @@
 /* never above native size (files are 2x of these CSS pixels) */
 .jsu-site .jsu-iot .jsu-product-logo img{max-width:min(100%,260px)}
 .jsu-site .jsu-photo-frame img{max-width:100%}
+
+/* pop-up gallery: every placeholder is the same size (4:3) whatever the photo's own proportions */
+.jsu-site .jsu-gallery-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;justify-content:stretch;align-items:start}
+.jsu-site .jsu-gallery-row.n-1{grid-template-columns:minmax(0,520px);justify-content:center}
+.jsu-site .jsu-gallery-row .jsu-photo{flex:none;max-width:none;width:100%;margin:0}
+.jsu-site .jsu-gallery-row .jsu-photo-frame{aspect-ratio:4/3;height:auto}
+.jsu-site .jsu-gallery-row .jsu-photo img{width:100%;height:100%;max-width:none!important;object-fit:cover;object-position:center}
+@media(max-width:900px){.jsu-site .jsu-gallery-row{grid-template-columns:minmax(0,1fr)}}
