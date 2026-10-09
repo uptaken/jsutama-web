@@ -4,7 +4,6 @@ import DOMPurify from "dompurify";
 import { api, absUploadUrl } from "@/lib/api";
 import { useContent } from "@/lib/useContent";
 import SEO from "@/components/SEO";
-import JsuLayout from "@/components/jsu/JsuLayout";
 
 // Allow common formatting tags + safe attributes; strip all scripts / event handlers.
 const SANITIZE_CFG = {
@@ -55,7 +54,7 @@ export default function BlogPost() {
       {notFound && (
         <SEO title="Post not found – JSU" description="The article you were looking for couldn't be found." path={`/blog/${slug}`} noindex />
       )}
-      <JsuLayout c={c}>
+      <>
       <div className="min-h-[60vh] bg-white pb-20">
         <div className="max-w-[880px] mx-auto px-6 pt-14">
           <Link
@@ -127,7 +126,7 @@ export default function BlogPost() {
           )}
         </div>
       </div>
-      </JsuLayout>
+      </>
     </>
   );
 }

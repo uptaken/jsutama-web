@@ -1002,3 +1002,71 @@
   .jsu-site .jsu-iso-bar li:last-child:nth-child(odd){grid-column:1/-1}
 }
 .jsu-site .jsu-iot-collab h3{font-weight:800}
+
+/* ═════════ Motion ═════════
+   Strong ease-out for entrances, faster exits, transform + opacity only, nothing starts from scale(0). */
+
+/* pop-ups: Radix keeps the node mounted until the closed animation ends */
+.jsu-overlay[data-state="open"]{animation:jsu-fade-in .22s cubic-bezier(.23,1,.32,1) both}
+.jsu-overlay[data-state="closed"]{animation:jsu-fade-out .16s ease-out both}
+.jsu-modal[data-state="open"]{animation:jsu-pop-in .28s cubic-bezier(.23,1,.32,1) both}
+.jsu-modal[data-state="closed"]{animation:jsu-pop-out .16s ease-out both}
+@keyframes jsu-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes jsu-fade-out{to{opacity:0}}
+@keyframes jsu-pop-in{from{opacity:0;transform:translate(-50%,-47%) scale(.96)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes jsu-pop-out{to{opacity:0;transform:translate(-50%,-49%) scale(.985)}}
+
+/* moving between pages inside a pop-up (overview <-> product): content slides a few pixels in the direction of travel */
+.jsu-modal-body[data-dir]{animation:jsu-view-fwd .26s cubic-bezier(.23,1,.32,1) both}
+.jsu-modal-body[data-dir="back"]{animation-name:jsu-view-back}
+@keyframes jsu-view-fwd{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+@keyframes jsu-view-back{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+.jsu-success{animation:jsu-view-fwd .3s cubic-bezier(.23,1,.32,1) both}
+
+/* moving between site pages: header/footer stay, the page itself fades up */
+.jsu-page{animation:jsu-page-in .34s cubic-bezier(.23,1,.32,1) both}
+@keyframes jsu-page-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.jsu-page-loading{min-height:60vh;background:linear-gradient(100deg,transparent 30%,#eef3fb 50%,transparent 70%) 0 0/200% 100%;animation:jsu-shimmer 1.2s linear infinite}
+@keyframes jsu-shimmer{to{background-position:-200% 0}}
+
+/* mobile menu drops in */
+.jsu-mobile-nav{animation:jsu-menu-in .22s cubic-bezier(.23,1,.32,1) both;transform-origin:top}
+@keyframes jsu-menu-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+/* press feedback on everything clickable that is not a plain link */
+.jsu-btn:active,.jsu-product-cta:active,.jsu-solution-main:active,.jsu-partner-link:active{transform:scale(.97)}
+.jsu-btn,.jsu-product-cta,.jsu-solution-main{transition-property:transform,background-color,border-color,color,box-shadow;transition-duration:.16s}
+
+@media(prefers-reduced-motion:reduce){
+  .jsu-overlay,.jsu-modal,.jsu-modal-body,.jsu-success,.jsu-page,.jsu-mobile-nav{animation-duration:.01ms!important;animation-delay:0s!important}
+  .jsu-page-loading{animation:none}
+}
+
+/* ═════════ Sharpness: photos never display larger than their native CSS size ═════════
+   (files are stored at 2x for retina screens; --nat is the native width in CSS px) */
+.jsu-site .jsu-photo{max-width:var(--nat);margin-inline:auto}
+.jsu-site .jsu-gallery-row .jsu-photo{max-width:var(--nat)}
+.jsu-site .jsu-gallery-row{justify-content:center}
+.jsu-site .jsu-photo img{image-rendering:auto}
+/* small product shots: show whole photo, centred, at (at most) native size instead of cropping and stretching */
+.jsu-site .jsu-device .jsu-photo.is-device{height:140px;max-width:100%;background:#fff;border-radius:14px}
+.jsu-site .jsu-device .jsu-photo.is-device .jsu-photo-frame{display:grid;place-items:center}
+.jsu-site .jsu-device .jsu-photo.is-device img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+.jsu-site .jsu-sp-groups .jsu-photo.is-group{height:160px;max-width:100%;background:#fff;border-radius:14px}
+.jsu-site .jsu-sp-groups .jsu-photo.is-group .jsu-photo-frame{display:grid;place-items:center}
+.jsu-site .jsu-sp-groups .jsu-photo.is-group img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+.jsu-site .jsu-photo.is-banner{max-width:min(var(--nat),100%)}
+/* page strips and product photos keep their proportions */
+.jsu-site .jsu-sp-photos .jsu-photo,.jsu-site .jsu-sp-product-photos .jsu-photo{max-width:min(var(--nat),100%)}
+.jsu-site .jsu-sp-photos .jsu-photo img,.jsu-site .jsu-sp-product-photos .jsu-photo img{width:100%;height:auto;max-height:none;object-fit:contain}
+
+/* a closing pop-up must not intercept clicks while it fades out */
+.jsu-overlay[data-state="closed"],.jsu-modal[data-state="closed"]{pointer-events:none}
+
+/* keep big logos from being scaled near/above their file size */
+.jsu-site .jsu-iot .jsu-product-logo img{max-height:104px}
+.jsu-site .jsu-detail-logo{max-height:64px}
+
+/* never above native size (files are 2x of these CSS pixels) */
+.jsu-site .jsu-iot .jsu-product-logo img{max-width:min(100%,260px)}
+.jsu-site .jsu-photo-frame img{max-width:100%}

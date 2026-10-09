@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { api, absUploadUrl } from "@/lib/api";
 import { useContent } from "@/lib/useContent";
 import SEO from "@/components/SEO";
-import JsuLayout from "@/components/jsu/JsuLayout";
 
 function fmtDate(iso) {
   try { return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }); }
@@ -27,7 +26,7 @@ export default function BlogIndex() {
         path="/blog"
         image={c?.seo?.og_image_url}
       />
-      <JsuLayout c={c}>
+      <>
       <div className="min-h-[60vh] bg-white pb-20">
         <div className="jsu-shell pt-14">
           <Link
@@ -89,7 +88,7 @@ export default function BlogIndex() {
           </div>
         </div>
       </div>
-      </JsuLayout>
+      </>
     </>
   );
 }

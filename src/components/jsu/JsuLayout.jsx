@@ -4,7 +4,7 @@ import {
   ArrowRight, ArrowUpRight, Briefcase, Headset, Instagram, Linkedin, Mail, MapPin, MessageCircle,
   Menu, Phone, X, Youtube,
 } from "lucide-react";
-import { CONTACT, SOLUTIONS, telLink, waLink } from "./data";
+import { CONTACT, PHOTOS, SOLUTIONS, telLink, waLink } from "./data";
 import { Brand, Btn } from "./shared";
 import { JsuContext } from "./context";
 import SolutionModal from "./SolutionModal";
@@ -55,6 +55,13 @@ export default function JsuLayout({ c = {}, children }) {
     }, 80);
     return () => clearTimeout(timer);
   }, [pathname, hash]);
+
+  // Warm the cache with the pop-up / page photos once the browser is idle, so they appear sharp and instantly when opened
+  useEffect(() => {
+    const warm = () => Object.values(PHOTOS).forEach((p) => { const img = new Image(); img.decoding = "async"; img.src = p.src; });
+    if ("requestIdleCallback" in window) { const id = window.requestIdleCallback(warm, { timeout: 4000 }); return () => window.cancelIdleCallback(id); }
+    const t = setTimeout(warm, 1500); return () => clearTimeout(t);
+  }, []);
 
   // Scroll reveal: .jsu-reveal blocks fade up once as they enter the viewport. Without JS, or with reduced motion, they simply show.
   useEffect(() => {
@@ -114,7 +121,7 @@ export default function JsuLayout({ c = {}, children }) {
         )}
       </header>
 
-      <main id="main-content">{children}</main>
+      <main id="main-content"><div className="jsu-page" key={pathname}>{children}</div></main>
 
       {/* ─── Contact call-to-action ─── */}
       <section className="jsu-contact" id="contact">

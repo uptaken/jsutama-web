@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowRight, CheckCircle2, Loader2, X } from "lucide-react";
 import { api, apiErrorMessage } from "@/lib/api";
@@ -22,7 +22,7 @@ function Field({ label, required, hint, children }) {
  * One modal for the three public forms (consultation, partnership, career).
  * `preset` pre-fills a topic / partnership type and records which button opened the form.
  */
-function FormBody({ type, preset, onClose }) {
+const FormBody = forwardRef(function FormBody({ type, preset, onClose }, ref) {
   const copy = FORM_COPY[type] || FORM_COPY.consultation;
   const [form, setForm] = useState({ ...EMPTY, topics: preset?.topics || [], partnership_interest: preset?.interest || "" });
   const [busy, setBusy] = useState(false);
@@ -57,7 +57,7 @@ function FormBody({ type, preset, onClose }) {
   };
 
   return (
-    <Dialog.Content className="jsu-site jsu-modal jsu-form-modal" aria-describedby={undefined}>
+    <Dialog.Content ref={ref} className="jsu-site jsu-modal jsu-form-modal" aria-describedby={undefined}>
       <Dialog.Close className="jsu-modal-close" aria-label="Close"><X size={18} /></Dialog.Close>
 
       {done ? (
@@ -194,7 +194,7 @@ function FormBody({ type, preset, onClose }) {
       )}
     </Dialog.Content>
   );
-}
+});
 
 /**
  * One modal for the three public forms (consultation, partnership, career).
@@ -202,11 +202,14 @@ function FormBody({ type, preset, onClose }) {
  * The form is mounted only while open, so every opening starts empty.
  */
 export default function InquiryModal({ type, preset, onClose }) {
+  // keep rendering the last form while it animates out; the next opening mounts a fresh one
+  const [shown, setShown] = useState({ type, preset });
+  if (type && (type !== shown.type || preset !== shown.preset)) setShown({ type, preset });
   return (
     <Dialog.Root open={!!type} onOpenChange={(next) => { if (!next) onClose(); }}>
       <Dialog.Portal>
         <Dialog.Overlay className="jsu-overlay" />
-        {type && <FormBody key={type} type={type} preset={preset} onClose={onClose} />}
+        <FormBody key={shown.type} type={shown.type} preset={shown.preset} onClose={onClose} />
       </Dialog.Portal>
     </Dialog.Root>
   );

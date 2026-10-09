@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeft, ArrowRight, Check, FileCheck2, X } from "lucide-react";
@@ -68,8 +68,8 @@ export function Photo({ id, className = "" }) {
   const p = PHOTOS[id];
   if (!p) return null;
   return (
-    <figure className={`jsu-photo ${className}`} style={{ "--ar": p.w / p.h }}>
-      <div className="jsu-photo-frame"><img src={p.src} width={p.w} height={p.h} alt={p.alt} loading="lazy" decoding="async" /></div>
+    <figure className={`jsu-photo ${className}`} style={{ "--ar": p.w / p.h, "--nat": `${p.w}px` }}>
+      <div className="jsu-photo-frame"><img src={p.src} width={p.w} height={p.h} alt={p.alt} decoding="async" style={{ maxWidth: p.w }} /></div>
       {p.caption && <figcaption>{p.caption}</figcaption>}
     </figure>
   );
@@ -243,22 +243,29 @@ const TITLES = { iot: "IoT Connectivity", fleet: "Fleet Intelligence", ai: "AI &
  * `solution` is one of iot | fleet | ai | devices (or null when closed).
  * IoT Connectivity has a second level: the ED&T Connect and N-Link product pages.
  */
-function SolutionBody({ solution, onClose, onConsult }) {
+// Dialog.Portal keeps its children mounted for the exit animation by attaching a ref to each of them,
+// so this wrapper must forward that ref to the real Dialog.Content.
+const SolutionBody = forwardRef(function SolutionBody({ solution, onClose, onConsult }, forwardedRef) {
   const [view, setView] = useState("main");
+  const [dir, setDir] = useState(null); // null until the user navigates, so the first view only gets the pop-up animation
+  const ref = useRef(null);
+  const goTo = (next) => { setDir(next === "main" ? "back" : "fwd"); setView(next); };
+  // each page of the modal starts at the top
+  useEffect(() => { ref.current?.scrollTo({ top: 0 }); }, [view]);
   const product = solution === "iot" && view !== "main" ? IOT_PRODUCTS[view] : null;
   const consult = (topic, source) => onConsult({ topics: topic ? [topic] : [], source });
 
   let body = null;
-  if (solution === "iot" && !product) body = <IotMain onOpen={setView} />;
+  if (solution === "iot" && !product) body = <IotMain onOpen={goTo} />;
   else if (product) body = <Detail photos={SOLUTION_PHOTOS[product.id]} product={product} badge={[product.kind]} tone={product.tone} onConsult={() => consult(product.topic, `IoT Connectivity / ${product.name}`)} />;
   else if (solution === "fleet") body = <Detail photos={SOLUTION_PHOTOS.fleet} product={FLEET} badge={[FLEET.badge]} tone={FLEET.tone} onConsult={() => consult(FLEET.topic, "Fleet Intelligence")} cta="Schedule a Consultation" />;
   else if (solution === "ai") body = <Detail photos={SOLUTION_PHOTOS.ai} product={AI} badge={AI.badges} tone={AI.tone} onConsult={() => consult(AI.topic, "AI & Automation")} cta={AI.ctaLabel} />;
   else if (solution === "devices") body = <DevicesDetail onConsult={() => consult(DEVICES.topic, "Smart Devices")} />;
 
   return (
-    <Dialog.Content className={`jsu-site jsu-modal jsu-solution-modal tone-${product ? product.tone : "blue"}`} aria-describedby={undefined}>
+    <Dialog.Content ref={(node) => { ref.current = node; if (typeof forwardedRef === "function") forwardedRef(node); else if (forwardedRef) forwardedRef.current = node; }} className={`jsu-site jsu-modal jsu-solution-modal tone-${product ? product.tone : "blue"}`} aria-describedby={undefined}>
       <div className="jsu-modal-bar">
-        <button type="button" className="jsu-back" onClick={() => (product ? setView("main") : onClose())}>
+        <button type="button" className="jsu-back" onClick={() => (product ? goTo("main") : onClose())}>
           <ArrowLeft size={16} /> {product ? "Back to IoT Connectivity" : "Back to Our Solutions"}
         </button>
         <div className="jsu-modal-bar-right">
@@ -267,10 +274,10 @@ function SolutionBody({ solution, onClose, onConsult }) {
         </div>
       </div>
       <Dialog.Title className="jsu-sr">{product ? product.name : TITLES[solution] || "Solution"}</Dialog.Title>
-      <div className="jsu-modal-body">{body}</div>
+      <div className="jsu-modal-body" key={view} data-dir={dir || undefined}>{body}</div>
     </Dialog.Content>
   );
-}
+});
 
 /**
  * `solution` is one of iot | fleet | ai | devices (or null when closed).
@@ -278,11 +285,14 @@ function SolutionBody({ solution, onClose, onConsult }) {
  * The body is mounted only while open, so it always starts on the first page.
  */
 export default function SolutionModal({ solution, onClose, onConsult }) {
+  // keep showing the last solution while the pop-up animates out
+  const [shown, setShown] = useState(solution);
+  if (solution && solution !== shown) setShown(solution);
   return (
     <Dialog.Root open={!!solution} onOpenChange={(next) => { if (!next) onClose(); }}>
       <Dialog.Portal>
         <Dialog.Overlay className="jsu-overlay" />
-        <SolutionBody solution={solution} onClose={onClose} onConsult={onConsult} />
+        <SolutionBody solution={shown} onClose={onClose} onConsult={onConsult} />
       </Dialog.Portal>
     </Dialog.Root>
   );

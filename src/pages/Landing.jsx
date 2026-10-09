@@ -1,10 +1,8 @@
 import JsuLanding from "@/components/jsu/JsuLanding";
 import SEO from "@/components/SEO";
 import { organizationLd } from "@/lib/schema";
-import { useContent } from "@/lib/useContent";
 
 export default function Landing() {
-  const content = useContent();
   return (
     <>
       <SEO
@@ -13,7 +11,7 @@ export default function Landing() {
         path="/"
         jsonLd={organizationLd()}
       />
-      <JsuLanding c={content} />
+      <JsuLanding />
     </>
   );
 }
