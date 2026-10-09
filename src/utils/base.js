@@ -8,8 +8,7 @@ import { toast } from "sonner";
 // import 'moment/locale/id.js'
 
 export default class Base{
-	host = "https://safe-lock-api-v2.quantumtri.com"
-	// host = "https://admin.ululanibali.com"
+	host = ""
 	url_api = this.host + "/api"
 	version = ""
 	locale_string = "id-ID"
@@ -18,10 +17,6 @@ export default class Base{
 	local_area_phone = "+62"
 	wait_time = 1500
 	app_version = '0.2.0066'
-
-	host2 = "https://lelang.legoas.co.id:8443"
-	url_api2 = this.host2 + "/api/portal"
-	auth = "Basic ODUwMWRjNjRiOTEzNDcyZmE0Mjc0MTE5MTEzYjdjNGQ6TFNTLWRjYTU0ZDQ0ODFjZDRlYTU4NDAwYzk4NDM3N2EzMzk1"
 
 	max_width_size = "1400px"
 	height_aerial = 'aerial-height'
@@ -90,9 +85,7 @@ export default class Base{
 				"timeout": 3600000,
 			}
 			var token = await window.localStorage.getItem('token')
-			if(url.includes(this.host2))
-				header['Authorization'] = this.auth
-			else if(token != null && token != '')
+			if(token != null && token != '')
 				header['Authorization'] = token
 
 			var response
